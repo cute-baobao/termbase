@@ -1,5 +1,16 @@
 {
   "IndexPage": {
     "title": "Hello world!"
+  },
+  "API": {
+    "Register": {
+      "paramsError": "Parameter error",
+      "success": "Registration successful"
+    },
+    "Login": {
+      "paramsError": "Parameter error",
+      "success": "Login successful",
+      "serverError": "Server error"
+    }
   }
 }
