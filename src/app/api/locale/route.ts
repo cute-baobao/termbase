@@ -25,6 +25,7 @@ export async function POST(request: NextRequest) {
 
     return response;
   } catch (error) {
+    console.log("Locale API Error:", error instanceof Error ? error.message : error);
     return NextResponse.json(
       { error: "Invalid request" },
       { status: 400 }
