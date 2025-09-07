@@ -18,6 +18,7 @@ import {
 import { useForm } from "react-hook-form";
 import { signInSchema, SignInSchema } from "../schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 
 const SignInCard = () => {
   const t = useTranslations();
@@ -31,7 +32,7 @@ const SignInCard = () => {
 
   const onSubmit = (data: SignInSchema) => {
     console.log(data);
-  }
+  };
   return (
     <Card className="w-full h-full border-none shadow-none md:w-[487px] gap-0">
       <CardHeader className="flex items-center justify-center text-center p-7">
@@ -48,7 +49,7 @@ const SignInCard = () => {
             <FormField
               name="email"
               control={form.control}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
@@ -64,7 +65,7 @@ const SignInCard = () => {
             <FormField
               name="password"
               control={form.control}
-              render={({field}) => (
+              render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
@@ -75,7 +76,7 @@ const SignInCard = () => {
                       )}
                     />
                   </FormControl>
-                   <FormMessage />
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -97,6 +98,17 @@ const SignInCard = () => {
           <FcGoogle className="mr-2 size-5" />
           {t("AuthPage.SignInPage.login-with-google")}
         </Button>
+      </CardContent>
+      <div className="px-7">
+        <DottedSeparator />
+      </div>
+      <CardContent className="p-7 flex items-center justify-center">
+        <p>
+          {t("AuthPage.SignInPage.dont-have-account")}&nbsp;
+          <Link href="/sign-up">
+            <span className="text-blue-700">&nbsp;{t("AuthPage.sign-up")}</span>
+          </Link>
+        </p>
       </CardContent>
     </Card>
   );

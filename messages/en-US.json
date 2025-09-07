@@ -10,7 +10,8 @@
       "email-placeholder": "Please enter your email",
       "password-placeholder": "Please enter your password",
       "login-with-github": "Login in with GitHub",
-      "login-with-google": "Login in with Google"
+      "login-with-google": "Login in with Google",
+      "dont-have-account": "Don't have an account?"
     },
     "SignUpPage": {
       "welcome": "Welcome to Sign Up",
@@ -19,7 +20,8 @@
       "password-placeholder": "Please enter your password",
       "confirm-password-placeholder": "Please confirm your password",
       "login-with-github": "Login in with GitHub",
-      "login-with-google": "Login in with Google"
+      "login-with-google": "Login in with Google",
+      "already-have-account": "Already have an account?"
     }
   },
   "API": {

@@ -10,7 +10,8 @@
       "email-placeholder": "请输入邮箱",
       "password-placeholder": "请输入密码",
       "login-with-github": "使用 GitHub 登录",
-      "login-with-google": "使用 Google 登录"
+      "login-with-google": "使用 Google 登录",
+      "dont-have-account": "还没有账号？"
     },
     "SignUpPage": {
       "welcome": "欢迎注册",
@@ -19,7 +20,8 @@
       "password-placeholder": "请输入密码",
       "confirm-password-placeholder": "请确认密码",
       "login-with-github": "使用 GitHub 登录",
-      "login-with-google": "使用 Google 登录"
+      "login-with-google": "使用 Google 登录",
+      "already-have-account": "已经有账号了？"
     }
   },
   "API": {

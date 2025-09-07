@@ -17,6 +17,7 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import Link from "next/link";
 
 const SignUpCard = () => {
   const t = useTranslations();
@@ -115,6 +116,17 @@ const SignUpCard = () => {
           <FcGoogle className="mr-2 size-5" />
           {t("AuthPage.SignUpPage.login-with-google")}
         </Button>
+      </CardContent>
+      <div className="px-7">
+        <DottedSeparator />
+      </div>
+      <CardContent className="p-7 flex items-center justify-center">
+        <p>
+          {t("AuthPage.SignUpPage.already-have-account")}&nbsp;
+          <Link href="/sign-in">
+            <span className="text-blue-700">&nbsp;{t("AuthPage.sign-in")}</span>
+          </Link>
+        </p>
       </CardContent>
     </Card>
   );
