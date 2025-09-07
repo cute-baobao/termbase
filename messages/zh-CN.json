@@ -2,6 +2,26 @@
   "IndexPage": {
     "title": "你好，世界！"
   },
+  "AuthPage": {
+    "sign-in": "登录",
+    "sign-up": "注册",
+    "SignInPage": {
+      "welcomeBack": "欢迎回来",
+      "email-placeholder": "请输入邮箱",
+      "password-placeholder": "请输入密码",
+      "login-with-github": "使用 GitHub 登录",
+      "login-with-google": "使用 Google 登录"
+    },
+    "SignUpPage": {
+      "welcome": "欢迎注册",
+      "username-placeholder": "请输入用户名",
+      "email-placeholder": "请输入邮箱",
+      "password-placeholder": "请输入密码",
+      "confirm-password-placeholder": "请确认密码",
+      "login-with-github": "使用 GitHub 登录",
+      "login-with-google": "使用 Google 登录"
+    }
+  },
   "API": {
     "Register": {
       "paramsError": "参数错误",

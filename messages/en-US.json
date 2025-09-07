@@ -2,6 +2,26 @@
   "IndexPage": {
     "title": "Hello world!"
   },
+  "AuthPage": {
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "SignInPage": {
+      "welcomeBack": "Welcome back",
+      "email-placeholder": "Please enter your email",
+      "password-placeholder": "Please enter your password",
+      "login-with-github": "Login in with GitHub",
+      "login-with-google": "Login in with Google"
+    },
+    "SignUpPage": {
+      "welcome": "Welcome to Sign Up",
+      "username-placeholder": "Please enter your username",
+      "email-placeholder": "Please enter your email",
+      "password-placeholder": "Please enter your password",
+      "confirm-password-placeholder": "Please confirm your password",
+      "login-with-github": "Login in with GitHub",
+      "login-with-google": "Login in with Google"
+    }
+  },
   "API": {
     "Register": {
       "paramsError": "Parameter error",
