@@ -1,12 +1,14 @@
-name: Lint on Dev Push
+
+name: Lint & Build on Dev/Main Push
 
 on:
   push:
     branches:
       - dev
+      - main
 
 jobs:
-  lint:
+  lint_and_build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,3 +25,5 @@ jobs:
         run: pnpm install
       - name: Run lint
         run: pnpm run lint
+      - name: Run build
+        run: pnpm run build
