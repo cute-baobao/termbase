@@ -1,0 +1,41 @@
+{
+  "IndexPage": {
+    "title": "Hello world!"
+  },
+  "AuthPage": {
+    "sign-in": "Sign In",
+    "sign-up": "Sign Up",
+    "SignInPage": {
+      "welcomeBack": "Welcome back",
+      "email-placeholder": "Please enter your email",
+      "password-placeholder": "Please enter your password",
+      "login-with-github": "Login in with GitHub",
+      "login-with-google": "Login in with Google",
+      "dont-have-account": "Don't have an account?"
+    },
+    "SignUpPage": {
+      "welcome": "Welcome to Sign Up",
+      "username-placeholder": "Please enter your username",
+      "email-placeholder": "Please enter your email",
+      "password-placeholder": "Please enter your password",
+      "confirm-password-placeholder": "Please confirm your password",
+      "login-with-github": "Login in with GitHub",
+      "login-with-google": "Login in with Google",
+      "already-have-account": "Already have an account?"
+    }
+  },
+  "API": {
+    "not-auth": "Not authenticated",
+    "Auth": {
+      "sign-up-success": "Sign up successful",
+      "email-already-exists": "Email already exists",
+      "paramsError": "Parameter error",
+      "sign-in-success": "Sign in successful",
+      "serverError": "Server error",
+      "user-not-found": "User not found",
+      "invalid-password": "Invalid password",
+      "log-out": "Log out successful"
+    }
+  }
+}
+
