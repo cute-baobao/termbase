@@ -16,6 +16,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { useSignIn } from '../api/use-sign-in';
 import { signInSchema, SignInSchema } from '../schemas';
+import { useUserStore } from '../store/use-user-store';
 
 const SignInCard = () => {
   const router = useRouter();
@@ -28,11 +29,15 @@ const SignInCard = () => {
     },
   });
   const mutation = useSignIn();
+  const { setUser } = useUserStore();
 
   const onSubmit = async (data: SignInSchema) => {
     const res = await mutation.mutateAsync({ json: data });
+    if (res.success && res.data) {
+      setUser({ ...res.data, createdAt: new Date(res.data.createdAt) });
+      router.push('/');
+    }
     toast(res.message);
-    router.push('/');
   };
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none md:w-[487px]">
@@ -51,7 +56,12 @@ const SignInCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="email" placeholder={t('AuthPage.SignInPage.email-placeholder')} />
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder={t('AuthPage.SignInPage.email-placeholder')}
+                      autoComplete="email"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -63,7 +73,12 @@ const SignInCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="password" placeholder={t('AuthPage.SignInPage.password-placeholder')} />
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder={t('AuthPage.SignInPage.password-placeholder')}
+                      autoComplete="current-password"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -104,4 +119,3 @@ const SignInCard = () => {
 };
 
 export { SignInCard };
-
