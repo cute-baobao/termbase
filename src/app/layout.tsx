@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "@/lib/shared/provider";
 import { NextIntlClientProvider } from "next-intl";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,9 +22,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter, " antialiased min-h-screen")}>
         <Providers>
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            {children}
+            <Toaster />
+          </NextIntlClientProvider>
         </Providers>
       </body>
     </html>
   );
 }
+

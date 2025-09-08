@@ -25,14 +25,17 @@
     }
   },
   "API": {
-    "Register": {
+    "not-auth": "Not authenticated",
+    "Auth": {
+      "sign-up-success": "Sign up successful",
+      "email-already-exists": "Email already exists",
       "paramsError": "Parameter error",
-      "success": "Registration successful"
-    },
-    "Login": {
-      "paramsError": "Parameter error",
-      "success": "Login successful",
-      "serverError": "Server error"
+      "sign-in-success": "Sign in successful",
+      "serverError": "Server error",
+      "user-not-found": "User not found",
+      "invalid-password": "Invalid password",
+      "log-out": "Log out successful"
     }
   }
 }
+

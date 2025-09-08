@@ -1,44 +1,40 @@
-"use client";
-import { DottedSeparator } from "@/components/dotted-separator";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { useTranslations } from "next-intl";
+'use client';
+import { DottedSeparator } from '@/components/dotted-separator';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { useTranslations } from 'next-intl';
 
-import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub } from 'react-icons/fa';
+import { FcGoogle } from 'react-icons/fc';
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { signInSchema, SignInSchema } from "../schemas";
-import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { useSignIn } from '../api/use-sign-in';
+import { signInSchema, SignInSchema } from '../schemas';
+import { toast } from 'sonner';
 
 const SignInCard = () => {
   const t = useTranslations();
   const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
+  const mutation = useSignIn();
 
-  const onSubmit = (data: SignInSchema) => {
-    console.log(data);
+  const onSubmit = async (data: SignInSchema) => {
+    const res = await mutation.mutateAsync({ json: data });
+    toast(res.message)
   };
   return (
-    <Card className="w-full h-full border-none shadow-none md:w-[487px] gap-0">
-      <CardHeader className="flex items-center justify-center text-center p-7">
-        <CardTitle className="text-2xl">
-          {t("AuthPage.SignInPage.welcomeBack")}
-        </CardTitle>
+    <Card className="h-full w-full gap-0 border-none shadow-none md:w-[487px]">
+      <CardHeader className="flex items-center justify-center p-7 text-center">
+        <CardTitle className="text-2xl">{t('AuthPage.SignInPage.welcomeBack')}</CardTitle>
       </CardHeader>
       <div className="px-7">
         <DottedSeparator />
@@ -52,11 +48,7 @@ const SignInCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="email"
-                      placeholder={t("AuthPage.SignInPage.email-placeholder")}
-                    />
+                    <Input {...field} type="email" placeholder={t('AuthPage.SignInPage.email-placeholder')} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -68,20 +60,14 @@ const SignInCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      {...field}
-                      type="password"
-                      placeholder={t(
-                        "AuthPage.SignInPage.password-placeholder"
-                      )}
-                    />
+                    <Input {...field} type="password" placeholder={t('AuthPage.SignInPage.password-placeholder')} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <Button type="submit" size="lg" className="w-full">
-              {t("AuthPage.sign-in")}
+              {t('AuthPage.sign-in')}
             </Button>
           </form>
         </Form>
@@ -89,24 +75,24 @@ const SignInCard = () => {
       <div className="px-7">
         <DottedSeparator />
       </div>
-      <CardContent className="p-7 flex flex-col space-y-4">
+      <CardContent className="flex flex-col space-y-4 p-7">
         <Button variant="secondary" size="lg" className="w-full">
           <FaGithub className="mr-2 size-5" />
-          {t("AuthPage.SignInPage.login-with-github")}
+          {t('AuthPage.SignInPage.login-with-github')}
         </Button>
         <Button variant="secondary" size="lg" className="w-full">
           <FcGoogle className="mr-2 size-5" />
-          {t("AuthPage.SignInPage.login-with-google")}
+          {t('AuthPage.SignInPage.login-with-google')}
         </Button>
       </CardContent>
       <div className="px-7">
         <DottedSeparator />
       </div>
-      <CardContent className="p-7 flex items-center justify-center">
+      <CardContent className="flex items-center justify-center p-7">
         <p>
-          {t("AuthPage.SignInPage.dont-have-account")}&nbsp;
+          {t('AuthPage.SignInPage.dont-have-account')}&nbsp;
           <Link href="/sign-up">
-            <span className="text-blue-700">&nbsp;{t("AuthPage.sign-up")}</span>
+            <span className="text-blue-700">&nbsp;{t('AuthPage.sign-up')}</span>
           </Link>
         </p>
       </CardContent>
@@ -115,3 +101,4 @@ const SignInCard = () => {
 };
 
 export { SignInCard };
+

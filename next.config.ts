@@ -3,8 +3,12 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  env: {
+    PORT: "4000",
+  },
 };
 
-const withNextIntl = createNextIntlPlugin()
+const withNextIntl = createNextIntlPlugin();
 
 export default withNextIntl(nextConfig);
+
