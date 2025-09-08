@@ -14,21 +14,21 @@
 - [X] 初始化 Prisma 配置
 - [X] 创建 migration 文件
 
-#### 1.2 JWT 认证系统
-- [ ] 完善 JWT 工具函数 (`src/lib/auth/jwt.ts`)
-- [ ] 创建认证中间件 (`src/lib/middleware/auth.ts`)
-- [ ] 修复并完善登录/注册 API
-  - [ ] 密码哈希处理 (bcrypt)
-  - [ ] 输入验证 (zod)
+#### 1.2 认证系统
+- [X] 使用cookie保存登陆状态, 使用jwt加密(@/lib/utils/jwt)
+- [X] 创建session中间件 (`src/lib/middleware/sessionMiddleware.ts`)
+- [X] 修复并完善登录/注册 API
+  - [X] 密码哈希处理 (bcrypt)
+  - [X] 输入验证 (zod)
   - [ ] 错误处理统一化
 
 ### 🔐 Phase 2: 用户系统 (Week 1-2)
 
 #### 2.1 用户注册/登录
-- [ ] 注册页面 UI (`/sign-up`)
-  - [ ] 表单验证 (email format, 密码强度)
-  - [ ] 成功/错误状态处理
-- [ ] 登录页面 UI (`/sign-in`)
+- [X] 注册页面 UI (`/sign-up`)
+  - [X] 表单验证 (email format, 密码强度)
+  - [X] 成功/错误状态处理
+- [X] 登录页面 UI (`/sign-in`)
   - [ ] 记住我功能
   - [ ] 重定向逻辑
 - [ ] 用户状态管理
