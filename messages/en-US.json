@@ -25,6 +25,12 @@
       "already-have-account": "Already have an account?"
     }
   },
+  "Navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "members": "Members"
+  },
   "API": {
     "not-auth": "Not authenticated",
     "Auth": {
