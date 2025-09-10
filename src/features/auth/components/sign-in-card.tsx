@@ -84,7 +84,7 @@ const SignInCard = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" size="lg" className="w-full">
+            <Button disabled={!form.formState.isValid || mutation.isPending} type="submit" size="lg" className="w-full">
               {t('AuthPage.sign-in')}
             </Button>
           </form>
@@ -119,3 +119,4 @@ const SignInCard = () => {
 };
 
 export { SignInCard };
+

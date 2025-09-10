@@ -7,7 +7,7 @@ type UserWithoutPassword = Omit<User, 'password'>;
 type UserStoreState = {
   user: UserWithoutPassword | null;
   setUser: (user: UserWithoutPassword) => void;
-  clearUser: () => void;
+  logOut: () => void;
 };
 
 const useUserStore = create<UserStoreState>()(
@@ -15,7 +15,7 @@ const useUserStore = create<UserStoreState>()(
     (set) => ({
       user: null,
       setUser: (user: UserWithoutPassword) => set({ user }),
-      clearUser: () => {
+      logOut: () => {
         // 调用登出接口
         client.api.auth.logOut.$post();
         return set({ user: null });
@@ -28,3 +28,4 @@ const useUserStore = create<UserStoreState>()(
 );
 
 export { useUserStore };
+

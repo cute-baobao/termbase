@@ -31,9 +31,9 @@
 - [X] 登录页面 UI (`/sign-in`)
   - [ ] 记住我功能
   - [ ] 重定向逻辑
-- [ ] 用户状态管理
-  - [ ] Context Provider 或 Zustand
-  - [ ] 路由保护 HOC
+- [X] 用户状态管理
+  - [X] Context Provider 或 Zustand
+  - [X] 路由保护 HOC
 
 #### 2.2 找回密码 (可后置)
 - [ ] 邮件配置 (nodemailer)

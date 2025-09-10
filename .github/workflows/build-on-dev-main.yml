@@ -1,4 +1,3 @@
-
 name: Lint & Build on Dev/Main Push
 
 on:
