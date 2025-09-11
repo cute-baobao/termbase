@@ -46,6 +46,7 @@
     "not-auth": "Not authenticated",
     "Auth": {
       "sign-up-success": "Sign up successful",
+      "sign-up-failed": "Sign up failed, username already exists",
       "email-already-exists": "Email already exists",
       "paramsError": "Parameter error",
       "sign-in-success": "Sign in successful",

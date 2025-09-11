@@ -46,7 +46,12 @@ const SignUpCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="text" placeholder={t('AuthPage.SignUpPage.username-placeholder')} />
+                    <Input
+                      autoComplete="username"
+                      {...field}
+                      type="text"
+                      placeholder={t('AuthPage.SignUpPage.username-placeholder')}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -58,7 +63,12 @@ const SignUpCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="email" placeholder={t('AuthPage.SignUpPage.email-placeholder')} />
+                    <Input
+                      {...field}
+                      autoComplete="email"
+                      type="email"
+                      placeholder={t('AuthPage.SignUpPage.email-placeholder')}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -116,4 +126,3 @@ const SignUpCard = () => {
 };
 
 export { SignUpCard };
-

@@ -1,7 +1,7 @@
 import { client } from '@/lib/utils/rpc';
 import { useMutation } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 type RequestType = InferRequestType<typeof client.api.auth.signUp.$post>;

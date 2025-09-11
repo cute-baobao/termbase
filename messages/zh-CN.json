@@ -46,6 +46,7 @@
     "not-auth": "请先登陆",
     "Auth": {
       "sign-up-success": "注册成功",
+      "sign-up-failed": "注册失败,用户名已存在",
       "email-already-exists": "邮箱已存在",
       "paramsError": "参数错误",
       "sign-in-success": "登录成功",

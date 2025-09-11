@@ -46,6 +46,7 @@ const app = new Hono<AdditionalContext>()
     const t = await getTranslations('API.Auth');
     const userInfo = c.req.valid('json');
     const res = await AuthService.createUser(userInfo);
+    if (res === null) return c.json({ success: false, message: t('sign-up-failed') }, 500);
     return c.json({ success: true, message: t('sign-up-success'), data: res }, 201);
   })
   .post('/logOut', sessionMiddleware, async (c) => {

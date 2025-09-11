@@ -1,3 +1,4 @@
+import { WorkSpaceSwitcher } from '@/features/workspaces/components/workspaces-switcher';
 import Image from 'next/image';
 import Link from 'next/link';
 import { DottedSeparator } from './dotted-separator';
@@ -6,12 +7,14 @@ import { Navigation } from './navigation';
 const Sidebar = () => {
   return (
     <aside className="h-full w-full bg-neutral-100 p-4">
-      <div className='w-full flex items-center justify-between space-x-2'>
+      <div className="flex w-full items-center space-x-4">
         <Link href="/">
           <Image src="/logo.svg" alt="logo" height={164} width={48} />
         </Link>
         <span className="text-2xl font-semibold text-neutral-500">Termbase</span>
       </div>
+      <DottedSeparator className="my-4" />
+      <WorkSpaceSwitcher />
       <DottedSeparator className="my-4" />
       <Navigation />
     </aside>
@@ -19,4 +22,3 @@ const Sidebar = () => {
 };
 
 export { Sidebar };
-
