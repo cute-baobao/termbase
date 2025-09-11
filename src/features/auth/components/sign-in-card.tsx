@@ -11,13 +11,11 @@ import { FcGoogle } from 'react-icons/fc';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useSignIn } from '../api/use-sign-in';
 import { signInSchema, SignInSchema } from '../schemas';
 
 const SignInCard = () => {
-  const router = useRouter();
   const t = useTranslations();
   const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),

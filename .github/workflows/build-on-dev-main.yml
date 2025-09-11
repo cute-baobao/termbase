@@ -32,3 +32,33 @@ jobs:
         run: pnpm run lint
       - name: Run build
         run: pnpm run build
+
+  deploy_to_vercel:
+    if: github.ref == 'refs/heads/main'
+    needs: lint_and_build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Add Environment Variables to Vercel
+        run: |
+          vercel env add DATABASE_URL production < <(echo "${{ secrets.DATABASE_URL }}")
+          vercel env add JWT_SECRET production < <(echo "${{ secrets.JWT_SECRET }}")
+          vercel env add NEXT_PUBLIC_BASE_URL production < <(echo "${{ secrets.NEXT_PUBLIC_BASE_URL }}")
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
