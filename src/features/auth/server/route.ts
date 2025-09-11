@@ -22,7 +22,7 @@ const userExists = async (c: Context, next: Next) => {
   const t = await getTranslations('API.Auth');
   const data: SignUpSchema = await c.req.json();
   const result = await AuthRepository.findEmailAlreadyExists(data.email);
-  if (!result) return c.json({ success: false, message: t('user-not-found') });
+  if (!result) return c.json({ success: false, message: t('user-not-found') }, 404);
   return next();
 };
 

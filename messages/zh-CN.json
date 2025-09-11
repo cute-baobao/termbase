@@ -1,6 +1,13 @@
 {
+  "log-out": "退出登录",
   "IndexPage": {
     "title": "你好，世界！"
+  },
+  "Navigation": {
+    "home": "首页",
+    "dashboard": "仪表盘",
+    "settings": "设置",
+    "members": " 成员"
   },
   "AuthPage": {
     "sign-in": "登录",
@@ -24,6 +31,17 @@
       "already-have-account": "已经有账号了？"
     }
   },
+  "WorkSpace": {
+    "CreateWorkspaceForm": {
+      "title": "创建工作区",
+      "button-cancel": "取消",
+      "button-create": "创建工作区",
+      "filed-name": "工作区名称",
+      "filed-name-placeholder": "请输入工作区名称",
+      "filed-description": "工作区描述",
+      "filed-description-placeholder": "请输入工作区描述（可选）"
+    }
+  },
   "API": {
     "not-auth": "请先登陆",
     "Auth": {
@@ -35,6 +53,10 @@
       "user-not-found": "用户不存在",
       "invalid-password": "密码错误",
       "log-out": "注销成功"
+    },
+    "Workspace": {
+      "create-success": "工作区创建成功",
+      "create-failed": "工作区创建失败"
     }
   }
 }

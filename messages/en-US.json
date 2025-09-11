@@ -1,4 +1,5 @@
 {
+  "log-out": "Log out",
   "IndexPage": {
     "title": "Hello world!"
   },
@@ -24,6 +25,23 @@
       "already-have-account": "Already have an account?"
     }
   },
+  "Navigation": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "members": "Members"
+  },
+  "WorkSpace":{
+    "CreateWorkspaceForm":{
+      "title":"Create a workspace",
+      "button-cancel": "Cancel",
+      "button-create": "Create Workspace",
+      "filed-name": "Workspace Name",
+      "filed-name-placeholder": "Please enter workspace name",
+      "filed-description": "Workspace Description",
+      "filed-description-placeholder": "Please enter workspace description (optional)"
+    }
+  },
   "API": {
     "not-auth": "Not authenticated",
     "Auth": {
@@ -35,6 +53,10 @@
       "user-not-found": "User not found",
       "invalid-password": "Invalid password",
       "log-out": "Log out successful"
+    },
+    "Workspace": {
+      "create-success": "Workspace created successfully",
+      "create-failed": "Workspace creation failed"
     }
   }
 }

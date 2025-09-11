@@ -18,6 +18,7 @@ export function LanguageSwitcher() {
           </option>
         ))}
       </select>
+      
     </div>
   );
 }

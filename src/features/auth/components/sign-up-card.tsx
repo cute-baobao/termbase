@@ -11,13 +11,10 @@ import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { toast } from 'sonner';
 import { useSignUp } from '../api/use-sign-up';
 import { signUpSchema, SignUpSchema } from '../schemas';
-import { useRouter } from 'next/navigation';
 
 const SignUpCard = () => {
-  const route = useRouter()
   const t = useTranslations();
   const form = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -27,14 +24,10 @@ const SignUpCard = () => {
       password: '',
     },
   });
-  const signUp = useSignUp();
+  const { mutate, isPending } = useSignUp();
 
-  const onSubmit = async (data: SignUpSchema) => {
-    const response = await signUp.mutateAsync({ json: data });
-    toast(response.message);
-    if(response.success && response.data !== null) {
-      route.push('/sign-in')
-    }
+  const onSubmit = (data: SignUpSchema) => {
+    mutate({ json: data });
   };
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none md:w-[487px]">
@@ -77,13 +70,18 @@ const SignUpCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="password" placeholder={t('AuthPage.SignUpPage.password-placeholder')} />
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder={t('AuthPage.SignUpPage.password-placeholder')}
+                      autoComplete="new-password"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={!form.formState.isValid || signUp.isPending} size="lg" className="w-full">
+            <Button type="submit" disabled={!form.formState.isValid || isPending} size="lg" className="w-full">
               {t('AuthPage.sign-up')}
             </Button>
           </form>

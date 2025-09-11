@@ -11,14 +11,11 @@ import { FcGoogle } from 'react-icons/fc';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { useSignIn } from '../api/use-sign-in';
 import { signInSchema, SignInSchema } from '../schemas';
 
 const SignInCard = () => {
-  const router = useRouter();
   const t = useTranslations();
   const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
@@ -27,12 +24,10 @@ const SignInCard = () => {
       password: '',
     },
   });
-  const mutation = useSignIn();
+  const { mutate, isPending } = useSignIn();
 
-  const onSubmit = async (data: SignInSchema) => {
-    const res = await mutation.mutateAsync({ json: data });
-    toast(res.message);
-    router.push('/');
+  const onSubmit = (data: SignInSchema) => {
+    mutate({ json: data });
   };
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none md:w-[487px]">
@@ -51,7 +46,12 @@ const SignInCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="email" placeholder={t('AuthPage.SignInPage.email-placeholder')} />
+                    <Input
+                      {...field}
+                      type="email"
+                      placeholder={t('AuthPage.SignInPage.email-placeholder')}
+                      autoComplete="email"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -63,13 +63,18 @@ const SignInCard = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input {...field} type="password" placeholder={t('AuthPage.SignInPage.password-placeholder')} />
+                    <Input
+                      {...field}
+                      type="password"
+                      placeholder={t('AuthPage.SignInPage.password-placeholder')}
+                      autoComplete="current-password"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit" size="lg" className="w-full">
+            <Button disabled={!form.formState.isValid || isPending} type="submit" size="lg" className="w-full">
               {t('AuthPage.sign-in')}
             </Button>
           </form>
