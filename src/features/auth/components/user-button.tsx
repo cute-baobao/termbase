@@ -5,10 +5,12 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { LogOut } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { useUserStore } from '../store/use-user-store';
 
 const UserButton = () => {
   const t = useTranslations();
+  const router = useRouter();
   const { user, logOut } = useUserStore();
   if (!user) return null;
   const { email, username } = user;
@@ -39,7 +41,7 @@ const UserButton = () => {
         </div>
         <DottedSeparator className="mb-1" />
         <DropdownMenuItem
-          onClick={() => logOut()}
+          onClick={() => logOut(router.refresh)}
           className="flex h-10 cursor-pointer items-center justify-center font-medium text-amber-700"
         >
           <LogOut className="mr-2 size-4" />

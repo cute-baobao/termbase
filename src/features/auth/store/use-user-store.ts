@@ -7,7 +7,7 @@ type UserWithoutPassword = Omit<User, 'password'>;
 type UserStoreState = {
   user: UserWithoutPassword | null;
   setUser: (user: UserWithoutPassword) => void;
-  logOut: () => void;
+  logOut: (callback?: () => void) => void;
 };
 
 const useUserStore = create<UserStoreState>()(
@@ -15,9 +15,10 @@ const useUserStore = create<UserStoreState>()(
     (set) => ({
       user: null,
       setUser: (user: UserWithoutPassword) => set({ user }),
-      logOut: () => {
+      logOut: async (callback) => {
         // 调用登出接口
-        client.api.auth.logOut.$post();
+        await client.api.auth.logOut.$post();
+        callback?.();
         return set({ user: null });
       },
     }),
