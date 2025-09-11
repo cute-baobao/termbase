@@ -1,5 +1,6 @@
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { getCurrentUser } from '@/features/auth/action';
+import { CreateWorkspaceForm } from '@/features/workspaces/components/create-workspace-form';
 import { getTranslations } from 'next-intl/server';
 import { redirect } from 'next/navigation';
 
@@ -10,6 +11,7 @@ export default async function Home() {
   return (
     <div>
       {t('title')} <LanguageSwitcher />
+      <CreateWorkspaceForm />
     </div>
   );
 }

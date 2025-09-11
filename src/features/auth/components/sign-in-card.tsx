@@ -13,10 +13,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { useSignIn } from '../api/use-sign-in';
 import { signInSchema, SignInSchema } from '../schemas';
-import { useUserStore } from '../store/use-user-store';
 
 const SignInCard = () => {
   const router = useRouter();
@@ -28,21 +26,10 @@ const SignInCard = () => {
       password: '',
     },
   });
-  const mutation = useSignIn();
-  const { setUser } = useUserStore();
+  const { mutate, isPending } = useSignIn();
 
-  const onSubmit = async (data: SignInSchema) => {
-    const res = await mutation.mutateAsync({ json: data });
-    if (res.success && res.data) {
-      setUser({
-        ...res.data,
-        createdAt: new Date(res.data.createdAt),
-        lastLogin: new Date(res.data.lastLogin || 0),
-        updatedAt: new Date(res.data.updatedAt),
-      });
-      router.push('/');
-    }
-    toast(res.message);
+  const onSubmit = (data: SignInSchema) => {
+    mutate({ json: data });
   };
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none md:w-[487px]">
@@ -89,7 +76,7 @@ const SignInCard = () => {
                 </FormItem>
               )}
             />
-            <Button disabled={!form.formState.isValid || mutation.isPending} type="submit" size="lg" className="w-full">
+            <Button disabled={!form.formState.isValid || isPending} type="submit" size="lg" className="w-full">
               {t('AuthPage.sign-in')}
             </Button>
           </form>

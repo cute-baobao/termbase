@@ -1,17 +1,42 @@
-import { client } from "@/lib/utils/rpc";
-import { useMutation } from "@tanstack/react-query";
-import { InferRequestType, InferResponseType } from "hono";
+import { client } from '@/lib/utils/rpc';
+import { useMutation } from '@tanstack/react-query';
+import { InferRequestType, InferResponseType } from 'hono';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import { useUserStore } from '../store/use-user-store';
 
 type RequestType = InferRequestType<typeof client.api.auth.signIn.$post>;
 type ResponseType = InferResponseType<typeof client.api.auth.signIn.$post>;
 
 export const useSignIn = () => {
+  const { setUser } = useUserStore();
+  const router = useRouter();
   const mutation = useMutation<ResponseType, Error, RequestType>({
-    mutationFn: async ({json}) => {
+    mutationFn: async ({ json }) => {
       const response = await client.api.auth.signIn.$post({ json });
-      return await response.json();
+      const responseJson = await response.json();
+      if (!response.ok) {
+        throw new Error(responseJson.message || 'Sign in failed');
+      }
+      return responseJson;
+    },
+    onSuccess: (response) => {
+      if (response.success && response.data) {
+        setUser({
+          ...response.data,
+          createdAt: new Date(response.data.createdAt),
+          lastLogin: new Date(response.data.lastLogin || 0),
+          updatedAt: new Date(response.data.updatedAt),
+        });
+        router.push('/');
+      }
+      toast(response.message);
+    },
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 
   return mutation;
 };
+

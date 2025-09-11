@@ -6,5 +6,5 @@ export const createWorkspaceSchema = z.object({
   ownerId: z.string().optional(),
 });
 
-export type createWorkspaceSchema = z.infer<typeof createWorkspaceSchema>;
+export type CreateWorkspaceSchema = z.infer<typeof createWorkspaceSchema>;
 

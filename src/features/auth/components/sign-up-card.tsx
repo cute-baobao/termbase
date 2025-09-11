@@ -8,16 +8,13 @@ import { useTranslations } from 'next-intl';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
-import { toast } from 'sonner';
 import { useSignUp } from '../api/use-sign-up';
 import { signUpSchema, SignUpSchema } from '../schemas';
 
 const SignUpCard = () => {
-  const route = useRouter();
   const t = useTranslations();
   const form = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
@@ -27,14 +24,10 @@ const SignUpCard = () => {
       password: '',
     },
   });
-  const signUp = useSignUp();
+  const { mutate, isPending } = useSignUp();
 
-  const onSubmit = async (data: SignUpSchema) => {
-    const response = await signUp.mutateAsync({ json: data });
-    toast(response.message);
-    if (response.success && response.data !== null) {
-      route.push('/sign-in');
-    }
+  const onSubmit = (data: SignUpSchema) => {
+    mutate({ json: data });
   };
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none md:w-[487px]">
@@ -88,7 +81,7 @@ const SignUpCard = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={!form.formState.isValid || signUp.isPending} size="lg" className="w-full">
+            <Button type="submit" disabled={!form.formState.isValid || isPending} size="lg" className="w-full">
               {t('AuthPage.sign-up')}
             </Button>
           </form>
@@ -123,3 +116,4 @@ const SignUpCard = () => {
 };
 
 export { SignUpCard };
+

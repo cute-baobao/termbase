@@ -1,7 +1,21 @@
+import { sessionMiddleware } from '@/lib/middleware/session-middleware';
+import { WorkspaceService } from '@/server/service/workspace-service';
+import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
+import { getTranslations } from 'next-intl/server';
+import { createWorkspaceSchema } from '../schemas';
 
-const app = new Hono().post('/', (c) => {
-  return c.text('Hello Workspaces');
+const app = new Hono().post('/', zValidator('json', createWorkspaceSchema), sessionMiddleware, async (c) => {
+  const t = await getTranslations('API.Workspace');
+  const { name, description } = c.req.valid('json');
+  const current = c.get('current-user');
+
+  const workspace = await WorkspaceService.createWorkspace({ name, description, ownerId: current.id });
+
+  if (!workspace) {
+    return c.json({ success: false, message: t('create-failed') }, 500);
+  }
+  return c.json({ success: true, message: t('create-success'), data: workspace });
 });
 
 export default app;

@@ -15,13 +15,12 @@ export class AuthRepository {
     return await db.user.create({
       data: {
         ...user,
-        role: 'USER',
       },
       select: {
         id: true,
         username: true,
         email: true,
-        role: true,
+        globalRole: true,
         createdAt: true,
       },
     });
