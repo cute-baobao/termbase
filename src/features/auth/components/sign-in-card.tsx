@@ -34,7 +34,12 @@ const SignInCard = () => {
   const onSubmit = async (data: SignInSchema) => {
     const res = await mutation.mutateAsync({ json: data });
     if (res.success && res.data) {
-      setUser({ ...res.data, createdAt: new Date(res.data.createdAt) });
+      setUser({
+        ...res.data,
+        createdAt: new Date(res.data.createdAt),
+        lastLogin: new Date(res.data.lastLogin || 0),
+        updatedAt: new Date(res.data.updatedAt),
+      });
       router.push('/');
     }
     toast(res.message);

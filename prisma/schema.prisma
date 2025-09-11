@@ -13,61 +13,202 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Define your database schema here
+// 用户模型
 model User {
-  id        String     @id @default(cuid())
-  username  String
-  email     String     @unique
-  password  String
-  role      Role       @default(USER) // 全局角色
-  createdAt DateTime   @default(now())
-  termbases Termbase[]
-  members   Member[]
+  id         String     @id @default(cuid())
+  username   String     @unique @db.VarChar(50)
+  email      String     @unique @db.VarChar(255)
+  password   String     @db.VarChar(255)
+  globalRole GlobalRole @default(USER)
+  isActive   Boolean    @default(true)
+  lastLogin  DateTime?
+  createdAt  DateTime   @default(now()) @map("created_at")
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+
+  // 关系
+  ownedWorkspaces  Workspace[]       @relation("WorkspaceOwner")
+  workspaceMembers WorkspaceMember[]
+  ownedTermbases   Termbase[]        @relation("TermbaseOwner")
+
+  @@map("users")
 }
 
+// 工作区模型
+model Workspace {
+  id          String   @id @default(cuid())
+  name        String   @db.VarChar(100)
+  description String?  @db.Text
+  ownerId     String   @map("owner_id")
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // 关系
+  owner       User              @relation("WorkspaceOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  members     WorkspaceMember[]
+  termbases   Termbase[]
+  invitations Invitation[]
+
+  @@index([ownerId])
+  @@index([isActive])
+  @@map("workspaces")
+}
+
+// 工作区成员权限表
+model WorkspaceMember {
+  id          Int           @id @default(autoincrement())
+  workspaceId String        @map("workspace_id")
+  userId      String        @map("user_id")
+  role        WorkspaceRole @default(VIEWER)
+  permissions Int           @default(0) // 位掩码权限，用于细粒度控制
+  joinedAt    DateTime      @default(now()) @map("joined_at")
+  createdAt   DateTime      @default(now()) @map("created_at")
+  updatedAt   DateTime      @updatedAt @map("updated_at")
+
+  // 关系
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, workspaceId])
+  @@index([workspaceId])
+  @@index([userId])
+  @@map("workspace_members")
+}
+
+// 邀请表
+model Invitation {
+  id          String        @id @default(cuid())
+  workspaceId String        @map("workspace_id")
+  email       String        @db.VarChar(255)
+  token       String        @unique @db.VarChar(255)
+  role        WorkspaceRole @default(VIEWER)
+  expiresAt   DateTime      @map("expires_at")
+  isUsed      Boolean       @default(false) @map("is_used")
+  usedAt      DateTime?     @map("used_at")
+  invitedBy   String?       @map("invited_by")
+  createdAt   DateTime      @default(now()) @map("created_at")
+
+  // 关系
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([email])
+  @@index([workspaceId])
+  @@index([expiresAt])
+  @@map("invitations")
+}
+
+// 术语库模型 - 权限继承自工作区
 model Termbase {
-  id         String   @id @default(cuid())
-  name       String
-  ownerId    String
-  owner      User     @relation(fields: [ownerId], references: [id])
-  isDeleted  Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  sourceLang Lang
-  targetLang Lang
-  terms      Term[]
-  members    Member[]
+  id          String   @id @default(cuid())
+  name        String   @db.VarChar(100)
+  description String?  @db.Text
+  ownerId     String   @map("owner_id")
+  workspaceId String   @map("workspace_id")
+  sourceLang  Lang     @map("source_lang")
+  targetLang  Lang     @map("target_lang")
+  isDeleted   Boolean  @default(false) @map("is_deleted")
+  isPublic    Boolean  @default(false) @map("is_public")
+  termCount   Int      @default(0) @map("term_count") // 缓存术语数量
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // 关系
+  owner     User      @relation("TermbaseOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  terms     Term[]
+
+  @@index([workspaceId])
+  @@index([ownerId])
+  @@index([isDeleted])
+  @@index([sourceLang, targetLang])
+  @@index([createdAt])
+  @@map("termbases")
 }
 
+// 术语模型
 model Term {
-  id         String   @id @default(cuid())
-  termbaseId String   @map("termbase_id")
-  termbase   Termbase @relation(fields: [termbaseId], references: [id])
-  sourceTerm String
-  targetTerm String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id          String    @id @default(cuid())
+  termbaseId  String    @map("termbase_id")
+  sourceTerm  String    @map("source_term") @db.Text
+  targetTerm  String    @map("target_term") @db.Text
+  definition  String?   @db.Text // 术语定义
+  context     String?   @db.Text // 上下文
+  notes       String?   @db.Text // 备注
+  isVerified  Boolean   @default(false) @map("is_verified") // 是否已验证
+  verifiedBy  String?   @map("verified_by") // 验证者ID
+  verifiedAt  DateTime? @map("verified_at") // 验证时间
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  // 关系
+  termbase Termbase @relation(fields: [termbaseId], references: [id], onDelete: Cascade)
+
+  @@index([termbaseId])
+  @@index([sourceTerm])
+  @@index([targetTerm])
+  @@index([isVerified])
+  @@map("terms")
 }
 
-model Member {
-  id         Int      @id @default(autoincrement())
-  termbaseId String   @map("termbase_id")
-  termbase   Termbase @relation(fields: [termbaseId], references: [id])
-  userId     String
-  user       User     @relation(fields: [userId], references: [id])
-  bit        Int // 位掩码权限
-  role       String // owner/editor/viewer，可选
-  createdAt  DateTime @default(now())
+// 审计日志表 - 记录重要操作
+model AuditLog {
+  id         String      @id @default(cuid())
+  userId     String?     @map("user_id")
+  action     AuditAction
+  entityType String      @map("entity_type") @db.VarChar(50)
+  entityId   String      @map("entity_id")
+  oldValues  Json?       @map("old_values")
+  newValues  Json?       @map("new_values")
+  metadata   Json?       // 额外的元数据
+  ipAddress  String?     @map("ip_address") @db.VarChar(45)
+  userAgent  String?     @map("user_agent") @db.Text
+  createdAt  DateTime    @default(now()) @map("created_at")
 
-  @@unique([userId, termbaseId])
+  @@index([userId])
+  @@index([action])
+  @@index([entityType, entityId])
+  @@index([createdAt])
+  @@map("audit_logs")
 }
 
-enum Role {
-  ADMIN
-  USER
+// 全局角色枚举
+enum GlobalRole {
+  ADMIN // 拥有所有工作区和术语库的完全访问权限
+  USER  // 普通用户，需要在每个工作区中单独授权
+
+  @@map("global_role")
 }
 
+// 工作区角色枚举
+enum WorkspaceRole {
+  OWNER  // 工作区所有者，拥有完全控制权
+  ADMIN  // 工作区管理员，可以管理成员和术语库
+  EDITOR // 编辑者，可以创建、编辑术语库和术语
+  VIEWER // 查看者，只能查看工作区内容
+
+  @@map("workspace_role")
+}
+
+// 语言枚举
 enum Lang {
-  EN
-  ZH
+  EN    // English
+  ZH    // Chinese
+  @@map("lang")
+}
+
+// 审计操作枚举
+enum AuditAction {
+  CREATE
+  UPDATE
+  DELETE
+  LOGIN
+  LOGOUT
+  INVITE
+  JOIN
+  LEAVE
+  EXPORT
+  IMPORT
+
+  @@map("audit_action")
 }
