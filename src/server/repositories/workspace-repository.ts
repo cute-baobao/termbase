@@ -41,7 +41,9 @@ export class WorkspaceRepository {
           },
         },
       },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 }
-
