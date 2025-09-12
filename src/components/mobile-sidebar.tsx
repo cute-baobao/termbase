@@ -19,7 +19,7 @@ export const MobileSidebar = () => {
           <MenuIcon className="size-4 text-neutral-500" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left" className="p-0">
+      <SheetContent  aria-description='Mobile navigation menu' side="left" className="p-0">
         {/* A11y: 提供对话框标题 (视觉隐藏) */}
         <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
         <Sidebar />

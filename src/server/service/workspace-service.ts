@@ -10,4 +10,9 @@ export class WorkspaceService {
   static async queryWorkspace(workspace: Partial<Pick<Workspace, 'id' | 'ownerId' | 'name'>>) {
     return await WorkspaceRepository.queryWorkspace(workspace);
   }
+
+  static async queryWorkspaceByUserId(userId: string) {
+    return await WorkspaceRepository.queryWorkspaceByUserId(userId);
+  }
 }
+

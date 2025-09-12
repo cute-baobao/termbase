@@ -6,8 +6,10 @@ import { Input } from '@/components/ui/input';
 import { useTranslations } from 'next-intl';
 
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { safeRedirect } from '@/lib/utils/safe-redirect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
@@ -25,9 +27,19 @@ const SignUpCard = () => {
     },
   });
   const { mutate, isPending } = useSignUp();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = safeRedirect(searchParams.get('next'));
 
   const onSubmit = (data: SignUpSchema) => {
-    mutate({ json: data });
+    mutate(
+      { json: data },
+      {
+        onSuccess: () => {
+          router.push(next ? `/sign-in?next=${encodeURIComponent(next)}` : '/sign-in');
+        },
+      },
+    );
   };
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none md:w-[487px]">
@@ -116,7 +128,7 @@ const SignUpCard = () => {
       <CardContent className="flex items-center justify-center p-7">
         <p>
           {t('AuthPage.SignUpPage.already-have-account')}&nbsp;
-          <Link href="/sign-in">
+          <Link href={next ? `/sign-in?next=${encodeURIComponent(next)}` : '/sign-in'}>
             <span className="text-blue-700">&nbsp;{t('AuthPage.sign-in')}</span>
           </Link>
         </p>
@@ -126,3 +138,4 @@ const SignUpCard = () => {
 };
 
 export { SignUpCard };
+

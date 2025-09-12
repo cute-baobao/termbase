@@ -4,11 +4,23 @@ import { Workspace } from '@prisma/client';
 
 export class WorkspaceRepository {
   static async createWorkspace(data: CreateWorkspaceSchema) {
-    return await db.workspace.create({
-      data: {
-        ...data,
-        ownerId: data.ownerId!,
-      },
+    return await db.$transaction(async (tx) => {
+      const workspace = await tx.workspace.create({
+        data: {
+          ...data,
+          ownerId: data.ownerId!,
+        },
+      });
+
+      await tx.workspaceMember.create({
+        data: {
+          workspaceId: workspace.id,
+          userId: data.ownerId!,
+          role: 'OWNER',
+        },
+      });
+
+      return workspace;
     });
   }
 
@@ -19,4 +31,17 @@ export class WorkspaceRepository {
       },
     });
   }
+
+  static async queryWorkspaceByUserId(userId: string) {
+    return await db.workspace.findMany({
+      where: {
+        members: {
+          some: {
+            userId,
+          },
+        },
+      },
+    });
+  }
 }
+

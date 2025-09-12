@@ -40,6 +40,10 @@
       "filed-name-placeholder": "请输入工作区名称",
       "filed-description": "工作区描述",
       "filed-description-placeholder": "请输入工作区描述（可选）"
+    },
+    "WorkspaceSwitcher": {
+      "title": "工作区",
+      "switcher-placeholder": "选择工作区"
     }
   },
   "API": {

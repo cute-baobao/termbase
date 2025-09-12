@@ -4,19 +4,24 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useGetWorkspace } from '../api/use-get-workspace';
 import { WorkSpacesAvatar } from './workspace-avatar';
 
+import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { RiAddCircleFill } from 'react-icons/ri';
 
 export const WorkSpaceSwitcher = () => {
+  const t = useTranslations('WorkSpace.WorkspaceSwitcher');
   const { data: workspaces } = useGetWorkspace();
+  const router = useRouter();
+
   return (
     <div className="flex flex-col gap-y-2">
       <div className="flex items-center justify-between">
-        <p className="text-xs text-neutral-500 uppercase font-semibold">Workspaces</p>
+        <p className="text-xs font-semibold text-neutral-500 uppercase">{t('title')}</p>
         <RiAddCircleFill className="size-5 cursor-pointer text-neutral-500 transition hover:opacity-75" />
       </div>
-      <Select>
+      <Select onValueChange={(value) => router.push(`/workspace/${value}`)}>
         <SelectTrigger className="w-full bg-neutral-200 p-1 py-5 font-medium">
-          <SelectValue placeholder="No workspace selected" />
+          <SelectValue placeholder={t('switcher-placeholder')} />
         </SelectTrigger>
         <SelectContent>
           {workspaces?.map((workspace) => (
@@ -32,3 +37,4 @@ export const WorkSpaceSwitcher = () => {
     </div>
   );
 };
+
