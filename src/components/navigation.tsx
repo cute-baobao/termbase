@@ -1,12 +1,16 @@
 'use client';
 
+import { useWorkspaceId } from '@/features/workspaces/hooks/use-workspace-id';
 import { cn } from '@/lib/utils';
 import { SettingsIcon, UserIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { GoCheckCircle, GoCheckCircleFill, GoHome, GoHomeFill } from 'react-icons/go';
 
 export const Navigation = () => {
+  const pathname = usePathname();
+  const { workspaceId } = useWorkspaceId();
   const t = useTranslations('Navigation');
   const routes = [
     {
@@ -17,7 +21,7 @@ export const Navigation = () => {
     },
     {
       label: t('dashboard'),
-      path: '',
+      path: '/dashboard',
       icon: GoCheckCircle,
       activeIcon: GoCheckCircleFill,
     },
@@ -29,7 +33,7 @@ export const Navigation = () => {
     },
     {
       label: t('settings'),
-      path: '/settings',
+      path: '/setting',
       icon: SettingsIcon,
       activeIcon: SettingsIcon,
     },
@@ -39,11 +43,12 @@ export const Navigation = () => {
     <nav>
       <ul>
         {routes.map((route) => {
-          const isActive = false;
+          const fullhref = `/workspaces/${workspaceId}${route.path}`;
+          const isActive = pathname === fullhref;
           const Icon = isActive ? route.activeIcon : route.icon;
           return (
             <li key={route.label}>
-              <Link href={route.path}>
+              <Link href={fullhref}>
                 <div
                   className={cn(
                     'hover:text-primary flex items-center gap-2.5 rounded-md p-2.5 font-medium text-neutral-500 transition',

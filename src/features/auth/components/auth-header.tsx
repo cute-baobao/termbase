@@ -46,7 +46,7 @@ const AuthHeader = () => {
   // 服务端与客户端首次渲染保持一致：默认链接为 /sign-in
   return (
     <nav className="flex items-center justify-between">
-      <Image src="/logo.svg" alt="Logo" width={40} height={40} />
+      <Image src="/logo.svg" alt="Logo" width={302} height={40} />
       <Button asChild variant="secondary">
         {/* 在未挂载前使用默认 href 避免 hydration mismatch；挂载后会更新 */}
         <Link href={href}>{isSignIn ? t('AuthPage.sign-up') : t('AuthPage.sign-in')}</Link>

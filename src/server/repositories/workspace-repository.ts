@@ -1,4 +1,4 @@
-import { CreateWorkspaceSchema } from '@/features/workspaces/schemas';
+import { CreateWorkspaceSchema, UpdateWorkspaceSchema } from '@/features/workspaces/schemas';
 import { db } from '@/lib/db';
 import { Workspace } from '@prisma/client';
 
@@ -44,6 +44,31 @@ export class WorkspaceRepository {
       orderBy: {
         createdAt: 'desc',
       },
+    });
+  }
+
+  static async updateWorkspace(workspaceId: string, data: UpdateWorkspaceSchema) {
+    return await db.workspace.update({
+      where: {
+        id: workspaceId,
+      },
+      data,
+    });
+  }
+
+  static async deleteWorkspace(workspaceId: string) {
+    return await db.$transaction(async (tx) => {
+      await tx.workspaceMember.deleteMany({
+        where: {
+          workspaceId,
+        },
+      });
+
+      await tx.workspace.delete({
+        where: {
+          id: workspaceId,
+        },
+      });
     });
   }
 }

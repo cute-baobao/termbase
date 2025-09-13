@@ -4,7 +4,7 @@ import { zValidator } from '@hono/zod-validator';
 import { Workspace } from '@prisma/client';
 import { Hono } from 'hono';
 import { getTranslations } from 'next-intl/server';
-import { createWorkspaceSchema } from '../schemas';
+import { createWorkspaceSchema, updateWorkspaceSchema } from '../schemas';
 
 const app = new Hono<AdditionalContext>()
   .get('/', sessionMiddleware, async (c) => {
@@ -24,7 +24,32 @@ const app = new Hono<AdditionalContext>()
     }
 
     return c.json({ success: true, message: t('create-success'), data: workspace });
-  });
+  })
+  .patch('/:workspaceId', zValidator('json', updateWorkspaceSchema), sessionMiddleware, async (c) => {
+    const t = await getTranslations('API.Workspace');
+    try {
+      const user = c.get('current-user');
+      const { workspaceId } = c.req.param();
+      const updateData = c.req.valid('json');
+      const response = await WorkspaceService.updateWorkspace(workspaceId, user.id, updateData);
+      return c.json({ success: true, message: t('update-success'), data: response });
+    } catch (error) {
+      console.log('[error update workspace]', error instanceof Error ? error.message : error);
+      return c.json({ success: false, message: t((error as Error).message) || 'Update workspace failed' }, 500);
+    }
+  })
+  .delete('/:workspaceId', sessionMiddleware, async (c) => {
+    const t = await getTranslations('API.Workspace');
+    try {
+      const user = c.get('current-user');
+      const { workspaceId } = c.req.param();
+      await WorkspaceService.deleteWorkspace(workspaceId, user.id);
+      return c.json({ success: true, message: t('delete-success'), data: workspaceId });
+    } catch (error) {
+      console.log('[error delete workspace]', error instanceof Error ? error.message : error);
+      return c.json({ success: false, message: t((error as Error).message) || 'Delete workspace failed' }, 500);
+    }
+
+  }); 
 
 export default app;
-

@@ -1,5 +1,9 @@
 {
   "log-out": "Log out",
+  "Confirm": {
+    "cancel": "Cancel",
+    "confirm": "Confirm"
+  },
   "IndexPage": {
     "title": "Hello world!"
   },
@@ -41,6 +45,21 @@
       "filed-description": "Workspace Description",
       "filed-description-placeholder": "Please enter workspace description (optional)"
     },
+    "EditWorkspaceForm":{
+      "title": "Edit Workspace",
+      "button-cancel": "Cancel",
+      "button-update": "Update Workspace",
+      "button-back":"Back",
+      "filed-name": "Workspace Name",
+      "filed-name-placeholder": "Please enter workspace name",
+      "filed-description": "Workspace Description",
+      "delete-workspace": "Delete Workspace",
+      "danger-zone": "Danger Zone",
+      "danger-zone-description": "Once you delete a workspace, there is no going back. Please be certain.",
+      "filed-description-placeholder": "Please enter workspace description (optional)",
+      "delete-workspace-confirm-title": "Delete Workspace",
+      "delete-workspace-confirm-message": "Are you sure you want to delete this workspace? This action cannot be undone."
+    },
     "WorkspaceSwitcher": {
       "title": "Workspace",
       "switcher-placeholder": "Select workspace"
@@ -61,7 +80,12 @@
     },
     "Workspace": {
       "create-success": "Workspace created successfully",
-      "create-failed": "Workspace creation failed"
+      "create-failed": "Workspace creation failed",
+      "update-success": "Workspace updated successfully",
+      "not-member-of-workspace": "You are not a member of this workspace",
+      "access-denied": "Access denied to this workspace",
+      "workspace-not-found": "Workspace not found",
+      "delete-success": "Workspace deleted successfully"
     }
   }
 }

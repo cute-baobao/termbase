@@ -14,5 +14,16 @@ export class WorkspaceMemberRepository {
       return null;
     }
   }
-}
 
+  static async memberInWorkspace(workspaceId: string, userId: string) {
+    return await db.workspaceMember.findFirst({
+      where: {
+        workspaceId,
+        userId,
+      },
+      include: {
+        user: true,
+      },
+    });
+  }
+}

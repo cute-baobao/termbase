@@ -9,15 +9,15 @@ import { useParams, useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { RiAddCircleFill } from 'react-icons/ri';
 import { useCreateWorkspaceModal } from '../hooks/use-create-workspace-modal';
+import { useWorkspaceId } from '../hooks/use-workspace-id';
 
 export const WorkSpaceSwitcher = () => {
   const t = useTranslations('WorkSpace.WorkspaceSwitcher');
   const { data: workspaces } = useGetWorkspace();
   const router = useRouter();
-  const params = useParams();
+  const { workspaceId } = useWorkspaceId()
   const { open } = useCreateWorkspaceModal();
-
-  const workspaceId = useMemo(() => params.workspaceId as string, [params]);
+ 
 
   return (
     <div className="flex flex-col gap-y-2">

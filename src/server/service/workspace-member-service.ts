@@ -6,4 +6,7 @@ export class WorkspaceMemberService {
   static async addMemberToWorkspace(schema: CreateWorkspaceMemberSchema) {
     return await WorkspaceMemberRepository.addMemberToWorkspace(schema);
   }
+  static async memberInWorkspace(workspaceId: string, userId: string) {
+    return await WorkspaceMemberRepository.memberInWorkspace(workspaceId, userId);
+  }
 }
