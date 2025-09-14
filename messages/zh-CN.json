@@ -40,6 +40,7 @@
       "title": "创建工作区",
       "button-cancel": "取消",
       "button-create": "创建工作区",
+      "button-join": "加入工作区",
       "filed-name": "工作区名称",
       "filed-name-placeholder": "请输入工作区名称",
       "filed-description": "工作区描述",

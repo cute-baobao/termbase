@@ -11,11 +11,11 @@ import { Itoast } from '@/lib/utils/Itoast';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { WorkspaceRole } from '@prisma/client';
 import { CopyIcon, LinkIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { inviteWorkspaceMemberSchema, InviteWorkspaceMemberSchema } from '../schema';
-import { useTranslations } from 'next-intl';
 
 export function InviteCode() {
   const t = useTranslations('WorkSpace.InviteCode');
@@ -31,11 +31,7 @@ export function InviteCode() {
   });
 
   const { mutate: generateInviteLink, isPending } = useGenerateInviteLink();
-  const [GenerateConfirm, confirm] = useConfirm(
-    t('generate-confirm-title'),
-    t('generate-confirm-message'),
-    'primary',
-  );
+  const [GenerateConfirm, confirm] = useConfirm(t('generate-confirm-title'), t('generate-confirm-message'));
 
   const onSubmit = (data: InviteWorkspaceMemberSchema) => {
     generateInviteLink(
@@ -81,7 +77,12 @@ export function InviteCode() {
             <CardTitle className="text-xl font-bold">{t('title')}</CardTitle>
             <CardDescription className="text-muted-foreground">{t('description')}</CardDescription>
           </div>
-          <Button onClick={() => inviteButton.current?.click()} size="sm" variant="secondary">
+          <Button
+            onClick={() => inviteButton.current?.click()}
+            disabled={isPending || form.formState.isValid}
+            size="sm"
+            variant="secondary"
+          >
             <LinkIcon className="mr-2 size-4" />
             {t('invite-link-button')}
           </Button>

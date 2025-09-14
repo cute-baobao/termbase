@@ -44,10 +44,17 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
     );
   };
 
+  const handleJoinWorkspace = () => {
+    router.push('/workspaces/join');
+  };
+
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none">
-      <CardHeader className="flex p-7">
+      <CardHeader className="flex items-center justify-between p-7">
         <CardTitle className="text-xl font-bold">{t('title')}</CardTitle>
+        <Button variant="secondary" onClick={handleJoinWorkspace} size="sm">
+          {t('button-join')}
+        </Button>
       </CardHeader>
       <div className="px-7">
         <DottedSeparator />

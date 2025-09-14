@@ -1,7 +1,6 @@
 import { client } from '@/lib/utils/rpc';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useUserStore } from '../store/use-user-store';
 
@@ -40,4 +39,3 @@ export const useSignIn = () => {
 
   return mutation;
 };
-

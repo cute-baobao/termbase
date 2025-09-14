@@ -40,6 +40,7 @@
       "title": "Create a workspace",
       "button-cancel": "Cancel",
       "button-create": "Create Workspace",
+      "button-join": "Join Workspace",
       "filed-name": "Workspace Name",
       "filed-name-placeholder": "Please enter workspace name",
       "filed-description": "Workspace Description",

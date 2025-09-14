@@ -5,8 +5,7 @@ import { useGetWorkspace } from '../api/use-get-workspace';
 import { WorkSpacesAvatar } from './workspace-avatar';
 
 import { useTranslations } from 'next-intl';
-import { useParams, useRouter } from 'next/navigation';
-import { useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { RiAddCircleFill } from 'react-icons/ri';
 import { useCreateWorkspaceModal } from '../hooks/use-create-workspace-modal';
 import { useWorkspaceId } from '../hooks/use-workspace-id';
@@ -15,9 +14,8 @@ export const WorkSpaceSwitcher = () => {
   const t = useTranslations('WorkSpace.WorkspaceSwitcher');
   const { data: workspaces } = useGetWorkspace();
   const router = useRouter();
-  const { workspaceId } = useWorkspaceId()
+  const { workspaceId } = useWorkspaceId();
   const { open } = useCreateWorkspaceModal();
- 
 
   return (
     <div className="flex flex-col gap-y-2">

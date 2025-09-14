@@ -9,12 +9,11 @@ import { useConfirm } from '@/lib/hooks/use-confirm';
 import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Workspace } from '@prisma/client';
-import { ArrowLeftIcon, CopyIcon } from 'lucide-react';
+import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 import { useDeleteWorkspace } from '../api/use-delete-workspace';
 import { useUpdateWorkspace } from '../api/use-update-workspace';
 import { updateWorkspaceSchema, UpdateWorkspaceSchema } from '../schemas';
@@ -27,7 +26,6 @@ interface EditWorkspaceForm {
 export const EditWorkspaceForm = ({ onCancel, initialValue }: EditWorkspaceForm) => {
   const router = useRouter();
   const t = useTranslations('WorkSpace.EditWorkspaceForm');
-  const tCommon = useTranslations('Common');
   const form = useForm<UpdateWorkspaceSchema>({
     resolver: zodResolver(updateWorkspaceSchema),
     defaultValues: {
@@ -74,13 +72,6 @@ export const EditWorkspaceForm = ({ onCancel, initialValue }: EditWorkspaceForm)
   };
 
   const disable = useMemo(() => isPending || isDeleting, [isPending, isDeleting]);
-  const fullInviteLink = `${window.location.origin}/workspace/${initialValue.id}/join`;
-
-  const handleCopyInviteLink = () => {
-    navigator.clipboard.writeText(fullInviteLink).then(() => {
-      toast.success(tCommon('invite-link-copied'));
-    });
-  };
 
   return (
     <div className="flex flex-col gap-4">

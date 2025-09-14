@@ -1,5 +1,5 @@
 import { ResponsiveModal } from '@/components/responsive-modal';
-import { Button } from '@/components/ui/button';
+import { Button, type ButtonVariantProps } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -7,7 +7,7 @@ import { useState } from 'react';
 export const useConfirm = (
   title: string,
   message: string,
-  variant: string = 'primary',
+  variant?: ButtonVariantProps,
 ): [React.FC<{ children?: React.ReactNode }>, () => Promise<unknown>] => {
   const [promise, setPromise] = useState<{ resolve: (value: boolean) => void } | null>(null);
   const t = useTranslations('Confirm');
@@ -45,7 +45,7 @@ export const useConfirm = (
             <Button onClick={handleCancel} variant="outline" size="default" className="w-full sm:w-auto">
               {t('cancel')}
             </Button>
-            <Button onClick={handleConfirm} variant={variant as any} size="default" className="w-full sm:w-auto">
+            <Button onClick={handleConfirm} variant={variant} size="default" className="w-full sm:w-auto">
               {t('confirm')}
             </Button>
           </div>

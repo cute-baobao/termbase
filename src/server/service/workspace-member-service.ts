@@ -13,4 +13,8 @@ export class WorkspaceMemberService {
   static async checkInviteToken(token: string) {
     return await WorkspaceMemberRepository.checkInviteToken(token);
   }
+
+  static async addMemberToWorkspaceByInvite(schema: CreateWorkspaceMemberSchema, token: string) {
+    return await WorkspaceMemberRepository.addMemberToWorkspaceByInvite(schema, token);
+  }
 }

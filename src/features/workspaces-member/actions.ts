@@ -32,11 +32,18 @@ export async function addMemberToWorkspace(token: string) {
       return { success: false, message: t('already-member') };
     }
 
-    const member = await WorkspaceMemberService.addMemberToWorkspace({
-      userId: user.id,
-      workspaceId,
-      role,
-    });
+    const member = await WorkspaceMemberService.addMemberToWorkspaceByInvite(
+      {
+        userId: user.id,
+        workspaceId,
+        role,
+      },
+      token,
+    );
+
+    if (!member) {
+      return { success: false, message: t('join-failed') };
+    }
 
     return { success: true, message: t('join-success'), data: member };
   } catch (error) {
