@@ -26,4 +26,18 @@ export class WorkspaceMemberRepository {
       },
     });
   }
+
+  static async checkInviteToken(token: string) {
+    try {
+      return await db.invitation.findFirst({
+        where: {
+          token: token,
+          isUsed: false,
+        },
+      });
+    } catch (error) {
+      console.log('[error checkInviteToken]', error instanceof Error ? error.message : error);
+      return null;
+    }
+  }
 }

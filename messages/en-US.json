@@ -63,7 +63,35 @@
     "WorkspaceSwitcher": {
       "title": "Workspace",
       "switcher-placeholder": "Select workspace"
+    },
+    "JoinForm": {
+      "title": "Join Workspace",
+      "invite-url": "Invite URL",
+      "invite-url-placeholder": "Please enter the invite URL",
+      "invite-url-invalid": "Invalid invite URL. Please check the URL and try again.",
+      "button-cancel": "Cancel",
+      "button-create": "Join Workspace"
+    },
+    "InviteCode": {
+      "title": "Invite Members",
+      "description": "Invite new members by email address",
+      "invite-link-button": "Invite Link",
+      "email-label": "Email",
+      "email-placeholder": "Enter email",
+      "role-label": "Role",
+      "role-placeholder": "Select Role",
+      "generate-confirm-title": "Generate Invite Link Successfully",
+      "generate-confirm-message": "Please copy the link and send it to your team members.",
+      "copy-success": "Invite link copied to clipboard"
     }
+  },
+  "Language": {
+    "switch-success": "Language switched successfully",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "Common": {
+    "invite-link-copied": "Invite link copied to clipboard"
   },
   "API": {
     "not-auth": "Not authenticated",
@@ -85,7 +113,14 @@
       "not-member-of-workspace": "You are not a member of this workspace",
       "access-denied": "Access denied to this workspace",
       "workspace-not-found": "Workspace not found",
-      "delete-success": "Workspace deleted successfully"
+      "delete-success": "Workspace deleted successfully",
+      "generate-invite-link-success": "Invite link generated successfully"
+    },
+    "WorkspaceMember": {
+      "invalid-token": "Invalid or expired invitation token",
+      "already-member": "You are already a member of this workspace",
+      "join-success": "Successfully joined the workspace",
+      "join-failed": "Failed to join workspace"
     }
   }
 }

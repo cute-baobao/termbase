@@ -1,11 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export function useLanguageSwitch() {
   const router = useRouter();
   const currentLocale = useLocale();
+  const t = useTranslations('Language');
 
   const switchLanguage = async (newLocale: string) => {
     try {
@@ -29,8 +30,8 @@ export function useLanguageSwitch() {
     currentLocale,
     switchLanguage,
     availableLocales: [
-      { code: "zh-CN", name: "中文" },
-      { code: "en-US", name: "English" },
+      { code: "zh-CN", name: t('chinese') },
+      { code: "en-US", name: t('english') },
     ],
   };
 }

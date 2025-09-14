@@ -1,3 +1,4 @@
+import { inviteWorkspaceMemberSchema } from '@/features/workspaces-member/schema';
 import { AdditionalContext, sessionMiddleware } from '@/lib/middleware/session-middleware';
 import { WorkspaceService } from '@/server/service/workspace-service';
 import { zValidator } from '@hono/zod-validator';
@@ -49,7 +50,19 @@ const app = new Hono<AdditionalContext>()
       console.log('[error delete workspace]', error instanceof Error ? error.message : error);
       return c.json({ success: false, message: t((error as Error).message) || 'Delete workspace failed' }, 500);
     }
-
-  }); 
+  })
+  .post('/:workspaceId/generate-invite-link', zValidator('json', inviteWorkspaceMemberSchema), sessionMiddleware, async (c) => {
+    const t = await getTranslations('API.Workspace');
+    try {
+      const user = c.get('current-user');
+      const { workspaceId } = c.req.param();
+      const inviteData = c.req.valid('json');
+      const inviteLink = await WorkspaceService.generateInviteLink(workspaceId, user.id, inviteData);
+      return c.json({ success: true, message: t('generate-invite-link-success'), data: inviteLink });
+    } catch (error) {
+      console.log('[error generate invite link]', error instanceof Error ? error.message : error);
+      return c.json({ success: false, message: t((error as Error).message) || 'Generate invite link failed' }, 500);
+    }
+  });
 
 export default app;

@@ -9,4 +9,8 @@ export class WorkspaceMemberService {
   static async memberInWorkspace(workspaceId: string, userId: string) {
     return await WorkspaceMemberRepository.memberInWorkspace(workspaceId, userId);
   }
+
+  static async checkInviteToken(token: string) {
+    return await WorkspaceMemberRepository.checkInviteToken(token);
+  }
 }

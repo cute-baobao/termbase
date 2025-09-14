@@ -1,8 +1,24 @@
+import { InviteWorkspaceMemberSchema } from '@/features/workspaces-member/schema';
 import { CreateWorkspaceSchema, UpdateWorkspaceSchema } from '@/features/workspaces/schemas';
 import { db } from '@/lib/db';
 import { Workspace } from '@prisma/client';
+import { randomBytes } from 'crypto';
 
 export class WorkspaceRepository {
+  static async generateInviteLink(workspaceId: string, userId: string, inviteData: InviteWorkspaceMemberSchema) {
+    const token = randomBytes(16).toString('hex');
+    const expiresAt = new Date(new Date().getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days from now
+    return await db.invitation.create({
+      data: {
+        workspaceId: workspaceId,
+        invitedBy: userId,
+        email: inviteData.email,
+        role: inviteData.role,
+        expiresAt,
+        token,
+      },
+    });
+  }
   static async createWorkspace(data: CreateWorkspaceSchema) {
     return await db.$transaction(async (tx) => {
       const workspace = await tx.workspace.create({

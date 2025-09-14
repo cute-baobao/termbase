@@ -1,9 +1,20 @@
+import { InviteWorkspaceMemberSchema } from '@/features/workspaces-member/schema';
 import { CreateWorkspaceSchema, UpdateWorkspaceSchema } from '@/features/workspaces/schemas';
 import { Workspace } from '@prisma/client';
 import { WorkspaceRepository } from '../repositories/workspace-repository';
 import { WorkspaceMemberService } from './workspace-member-service';
 
 export class WorkspaceService {
+  static async generateInviteLink(workspaceId: string, userId: string, inviteData: InviteWorkspaceMemberSchema) {
+    const member = await WorkspaceMemberService.memberInWorkspace(workspaceId, userId);
+    if (!member) {
+      throw new Error('not-member-of-workspace');
+    }
+    if (member.role !== 'OWNER' && member.role !== 'ADMIN' && member.user.globalRole !== 'ADMIN') {
+      throw new Error('access-denied');
+    }
+    return await WorkspaceRepository.generateInviteLink(workspaceId, userId, inviteData);
+  }
   static async createWorkspace(data: CreateWorkspaceSchema) {
     return await WorkspaceRepository.createWorkspace(data);
   }
