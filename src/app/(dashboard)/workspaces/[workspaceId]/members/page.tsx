@@ -4,9 +4,9 @@ import { InviteCode } from '@/features/workspaces-member/components/invite-code'
 import { redirect } from 'next/navigation';
 
 interface WorkspaceMembersPageProps {
-  params: {
+  params: Promise<{
     workspaceId: string;
-  };
+  }>;
 }
 
 export default async function WorkspaceMembersPage({ params }: WorkspaceMembersPageProps) {
@@ -14,7 +14,7 @@ export default async function WorkspaceMembersPage({ params }: WorkspaceMembersP
   if (!user) {
     redirect('/sign-in');
   }
-  const workspaceId = params.workspaceId;
+  const workspaceId = (await params).workspaceId;
   // Check if the user is a member of the workspace
   const member = await memberInWorkspace(workspaceId, user.id);
   if (!member) {
@@ -27,3 +27,4 @@ export default async function WorkspaceMembersPage({ params }: WorkspaceMembersP
     </div>
   );
 }
+

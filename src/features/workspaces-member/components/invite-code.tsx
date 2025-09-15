@@ -79,7 +79,7 @@ export function InviteCode() {
           </div>
           <Button
             onClick={() => inviteButton.current?.click()}
-            disabled={isPending || form.formState.isValid}
+            disabled={isPending || !form.formState.isValid}
             size="sm"
             variant="secondary"
           >
