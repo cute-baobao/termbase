@@ -16,6 +16,11 @@ export const joinWorkspaceSchema = z.object({
   inviteUrl: z.string().url(),
 });
 
+export const queryWorkspaceMembersSchema = z.object({
+  workspaceId: z.string(),
+});
+
 export type CreateWorkspaceMemberSchema = z.infer<typeof createWorkspaceMemberSchema>;
 export type InviteWorkspaceMemberSchema = z.infer<typeof inviteWorkspaceMemberSchema>;
 export type JoinWorkspaceSchema = z.infer<typeof joinWorkspaceSchema>;
+export type QueryWorkspaceMembers = z.infer<typeof queryWorkspaceMembersSchema>;

@@ -122,6 +122,15 @@
       "already-member": "您已经是该工作区的成员",
       "join-success": "成功加入工作区",
       "join-failed": "加入工作区失败"
+    },
+    "WorkspacesMembers": {
+      "not-member": "不是该工作区成员",
+      "retrieved-success": "工作区成员获取成功",
+      "retrieved-failed": "获取工作区成员失败",
+      "delete-success": "成员删除成功",
+      "delete-failed": "删除成员失败",
+      "member-not-found": "成员不存在",
+      "no-permission": "没有权限删除成员"
     }
   }
 }

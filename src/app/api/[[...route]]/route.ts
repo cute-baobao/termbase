@@ -3,11 +3,16 @@ import { handle } from 'hono/vercel';
 
 import auth from '@/features/auth/server/route';
 import termbase from '@/features/termbase/server/route';
-import workspace from '@/features/workspaces/server/route';
+import workspaceMembers from '@/features/members/server/route';
+import workspaces from '@/features/workspaces/server/route';
 
 const app = new Hono().basePath('/api');
 
-const routes = app.route('/auth', auth).route('/termbases', termbase).route('/workspaces', workspace);
+const routes = app
+  .route('/auth', auth)
+  .route('/termbases', termbase)
+  .route('/workspaces', workspaces)
+  .route('/members', workspaceMembers);
 
 export const GET = handle(app);
 export const POST = handle(app);

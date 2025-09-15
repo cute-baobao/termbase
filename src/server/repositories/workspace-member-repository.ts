@@ -1,7 +1,19 @@
-import { CreateWorkspaceMemberSchema } from '@/features/workspaces-member/schema';
+import { CreateWorkspaceMemberSchema } from '@/features/members/schema';
 import { db } from '@/lib/db';
 
 export class WorkspaceMemberRepository {
+  static async deleteWorkspaceMember(memberId: number) {
+    try {
+      return await db.workspaceMember.delete({
+        where: {
+          id: memberId,
+        },
+      });
+    } catch (error) {
+      console.log('[error deleteWorkspaceMember]', error instanceof Error ? error.message : error);
+      return null;
+    }
+  }
   static async addMemberToWorkspace(schema: CreateWorkspaceMemberSchema) {
     try {
       return await db.workspaceMember.create({
@@ -67,5 +79,27 @@ export class WorkspaceMemberRepository {
       console.log('[error addMemberToWorkspaceByInvite]', error instanceof Error ? error.message : error);
       return null;
     }
+  }
+
+  static async getWorkspaceMembers(workspaceId: string) {
+    return await db.workspaceMember.findMany({
+      where: {
+        workspaceId,
+      },
+      include: {
+        user: true,
+      },
+    });
+  }
+
+  static async getWorkspaceMemberById(memberId: number) {
+    return await db.workspaceMember.findUnique({
+      where: {
+        id: memberId,
+      },
+      include: {
+        user: true,
+      },
+    });
   }
 }

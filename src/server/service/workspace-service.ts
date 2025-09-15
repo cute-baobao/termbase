@@ -1,4 +1,4 @@
-import { InviteWorkspaceMemberSchema } from '@/features/workspaces-member/schema';
+import { InviteWorkspaceMemberSchema } from '@/features/members/schema';
 import { CreateWorkspaceSchema, UpdateWorkspaceSchema } from '@/features/workspaces/schemas';
 import { Workspace } from '@prisma/client';
 import { WorkspaceRepository } from '../repositories/workspace-repository';

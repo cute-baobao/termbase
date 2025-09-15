@@ -122,6 +122,15 @@
       "already-member": "You are already a member of this workspace",
       "join-success": "Successfully joined the workspace",
       "join-failed": "Failed to join workspace"
+    },
+    "WorkspacesMembers": {
+      "not-member": "Not a member of the workspace",
+      "retrieved-success": "Workspace members retrieved successfully",
+      "retrieved-failed": "Failed to retrieve workspace members",
+      "delete-success": "Member deleted successfully",
+      "delete-failed": "Failed to delete member",
+      "member-not-found": "Member not found",
+      "no-permission": "No permission to delete member"
     }
   }
 }

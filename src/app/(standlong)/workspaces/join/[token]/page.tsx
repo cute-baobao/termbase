@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { getCurrentUser } from '@/features/auth/action';
-import { addMemberToWorkspace } from '@/features/workspaces-member/actions';
+import { addMemberToWorkspace } from '@/features/members/actions';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
