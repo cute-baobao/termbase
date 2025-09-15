@@ -130,7 +130,9 @@
       "delete-success": "成员删除成功",
       "delete-failed": "删除成员失败",
       "member-not-found": "成员不存在",
-      "no-permission": "没有权限删除成员"
+      "no-permission": "没有权限删除成员",
+      "update-success": "成员角色更新成功",
+      "update-failed": "更新成员角色失败"
     }
   }
 }

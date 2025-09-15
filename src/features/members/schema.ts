@@ -20,7 +20,12 @@ export const queryWorkspaceMembersSchema = z.object({
   workspaceId: z.string(),
 });
 
-export type CreateWorkspaceMemberSchema = z.infer<typeof createWorkspaceMemberSchema>;
-export type InviteWorkspaceMemberSchema = z.infer<typeof inviteWorkspaceMemberSchema>;
+export const updateWorkspaceMemberSchema = z.object({
+  role: z.enum(WorkspaceRole),
+});
+
+export type CreateWorkspaceMember = z.infer<typeof createWorkspaceMemberSchema>;
+export type InviteWorkspaceMember = z.infer<typeof inviteWorkspaceMemberSchema>;
 export type JoinWorkspaceSchema = z.infer<typeof joinWorkspaceSchema>;
 export type QueryWorkspaceMembers = z.infer<typeof queryWorkspaceMembersSchema>;
+export type UpdateWorkspaceMember = z.infer<typeof updateWorkspaceMemberSchema>;

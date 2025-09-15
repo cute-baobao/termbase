@@ -130,7 +130,9 @@
       "delete-success": "Member deleted successfully",
       "delete-failed": "Failed to delete member",
       "member-not-found": "Member not found",
-      "no-permission": "No permission to delete member"
+      "no-permission": "No permission to delete member",
+      "update-success": "Member role updated successfully",
+      "update-failed": "Failed to update member role"
     }
   }
 }

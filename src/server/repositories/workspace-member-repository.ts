@@ -1,7 +1,23 @@
-import { CreateWorkspaceMemberSchema } from '@/features/members/schema';
+import { CreateWorkspaceMember } from '@/features/members/schema';
 import { db } from '@/lib/db';
 
 export class WorkspaceMemberRepository {
+  static async updateWorkspaceMember(memberId: number, data: { role: 'OWNER' | 'ADMIN' | 'EDITOR' | 'VIEWER' }) {
+    try {
+      return await db.workspaceMember.update({
+        where: {
+          id: memberId,
+        },
+        data: {
+          role: data.role,
+        },
+      });
+    } catch (error) {
+      console.error('[error updateWorkspaceMember]', error instanceof Error ? error.message : error);
+      return null;
+    }
+  }
+
   static async deleteWorkspaceMember(memberId: number) {
     try {
       return await db.workspaceMember.delete({
@@ -14,7 +30,7 @@ export class WorkspaceMemberRepository {
       return null;
     }
   }
-  static async addMemberToWorkspace(schema: CreateWorkspaceMemberSchema) {
+  static async addMemberToWorkspace(schema: CreateWorkspaceMember) {
     try {
       return await db.workspaceMember.create({
         data: {
@@ -56,7 +72,7 @@ export class WorkspaceMemberRepository {
     }
   }
 
-  static async addMemberToWorkspaceByInvite(schema: CreateWorkspaceMemberSchema, token: string) {
+  static async addMemberToWorkspaceByInvite(schema: CreateWorkspaceMember, token: string) {
     try {
       return await db.$transaction(async (tx) => {
         const member = await tx.workspaceMember.create({

@@ -3,7 +3,7 @@ import { WorkspaceMemberService } from '@/server/service/workspace-member-servic
 import { zValidator } from '@hono/zod-validator';
 import { Hono } from 'hono';
 import { getTranslations } from 'next-intl/server';
-import { queryWorkspaceMembersSchema } from '../schema';
+import { queryWorkspaceMembersSchema, updateWorkspaceMemberSchema } from '../schema';
 
 const app = new Hono()
   .get('/', sessionMiddleware, zValidator('query', queryWorkspaceMembersSchema), async (c) => {
@@ -46,6 +46,28 @@ const app = new Hono()
       }
 
       return c.json({ success: false, message: t('delete-failed') }, 500);
+    }
+  })
+  .patch('/:memberId', zValidator('json', updateWorkspaceMemberSchema), sessionMiddleware, async (c) => {
+    const t = await getTranslations('API.WorkspacesMembers');
+    try {
+      const { memberId } = c.req.param();
+      const data = c.req.valid('json');
+      const user = c.get('current-user');
+      const updated = await WorkspaceMemberService.updateWorkspaceMember(Number(memberId), user.id, data);
+      if (!updated) {
+        return c.json({ success: false, message: t('update-failed') }, 500);
+      }
+      return c.json({ success: true, message: t('update-success'), data: updated });
+    } catch (error) {
+      const msg = error instanceof Error ? error.message : 'update-failed';
+      console.error('[error update workspace member]', msg);
+      if (msg === 'member-not-found') {
+        return c.json({ success: false, message: t('member-not-found') }, 404);
+      } else if (msg === 'no-permission') {
+        return c.json({ success: false, message: t('no-permission') }, 403);
+      }
+      return c.json({ success: false, message: t('update-failed') }, 500);
     }
   });
 
