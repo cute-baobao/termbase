@@ -12,7 +12,7 @@ export const useCreateWorkspace = () => {
     mutationFn: async ({ json }) => {
       const response = await client.api.workspaces.$post({ json });
       const responseJson = await response.json();
-      if (!response.ok) {
+      if (!response.ok && !responseJson.success) {
         throw new Error(responseJson.message || 'Create workspace failed');
       }
       return responseJson;

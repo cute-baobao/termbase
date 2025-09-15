@@ -1,5 +1,9 @@
 {
   "log-out": "退出登录",
+  "Confirm": {
+    "cancel": "取消",
+    "confirm": "确认"
+  },
   "IndexPage": {
     "title": "你好，世界！"
   },
@@ -36,16 +40,65 @@
       "title": "创建工作区",
       "button-cancel": "取消",
       "button-create": "创建工作区",
+      "button-join": "加入工作区",
       "filed-name": "工作区名称",
       "filed-name-placeholder": "请输入工作区名称",
       "filed-description": "工作区描述",
       "filed-description-placeholder": "请输入工作区描述（可选）"
+    },
+    "EditWorkspaceForm":{
+      "title": "编辑工作区",
+      "button-cancel": "取消",
+      "button-update": "更新工作区",
+      "button-back":"返回",
+      "filed-name": "工作区名称",
+      "filed-name-placeholder": "请输入工作区名称",
+      "filed-description": "工作区描述",
+      "delete-workspace": "删除工作区",
+      "danger-zone": "危险区域",
+      "danger-zone-description": "一旦删除工作区，就无法恢复。请确认。",
+      "filed-description-placeholder": "请输入工作区描述（可选）",
+      "delete-workspace-confirm-title": "删除工作区",
+      "delete-workspace-confirm-message": "您确定要删除此工作区吗？此操作无法撤消。"
+    },
+    "WorkspaceSwitcher": {
+      "title": "工作区",
+      "switcher-placeholder": "选择工作区"
+    },
+    "JoinForm": {
+      "title": "加入工作区",
+      "invite-url": "邀请链接",
+      "invite-url-placeholder": "请输入邀请链接",
+      "invite-url-invalid": "邀请链接无效，请检查链接后重试。",
+      "button-cancel": "取消",
+      "button-create": "加入工作区"
+    },
+    "InviteCode": {
+      "title": "邀请成员",
+      "description": "通过邮箱地址邀请新成员",
+      "invite-link-button": "邀请链接",
+      "email-label": "邮箱",
+      "email-placeholder": "请输入邮箱",
+      "role-label": "角色",
+      "role-placeholder": "选择角色",
+      "generate-confirm-title": "邀请链接生成成功",
+      "generate-confirm-message": "请复制链接并发送给您的团队成员。",
+      "copy-success": "邀请链接已复制到剪贴板"
     }
+  },
+  "Language": {
+    "switch-success": "语言切换成功",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "Common": {
+    "invite-link-copied": "邀请链接已复制到剪贴板"
   },
   "API": {
     "not-auth": "请先登陆",
     "Auth": {
       "sign-up-success": "注册成功",
+      "sign-up-failed": "注册失败,用户名已存在",
       "email-already-exists": "邮箱已存在",
       "paramsError": "参数错误",
       "sign-in-success": "登录成功",
@@ -56,8 +109,19 @@
     },
     "Workspace": {
       "create-success": "工作区创建成功",
-      "create-failed": "工作区创建失败"
+      "create-failed": "工作区创建失败",
+      "update-success": "工作区更新成功",
+      "not-member-of-workspace": "你不是该工作区成员",
+      "access-denied": "没有权限访问该工作区",
+      "workspace-not-found": "工作区不存在",
+      "delete-success": "工作区删除成功",
+      "generate-invite-link-success": "邀请链接生成成功"
+    },
+    "WorkspaceMember": {
+      "invalid-token": "邀请链接无效或已过期",
+      "already-member": "您已经是该工作区的成员",
+      "join-success": "成功加入工作区",
+      "join-failed": "加入工作区失败"
     }
   }
 }
-

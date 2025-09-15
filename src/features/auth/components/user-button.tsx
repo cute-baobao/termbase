@@ -41,7 +41,7 @@ const UserButton = () => {
         </div>
         <DottedSeparator className="mb-1" />
         <DropdownMenuItem
-          onClick={() => logOut(router.refresh)}
+          onClick={() => logOut(() => router.push('/sign-in'))}
           className="flex h-10 cursor-pointer items-center justify-center font-medium text-amber-700"
         >
           <LogOut className="mr-2 size-4" />

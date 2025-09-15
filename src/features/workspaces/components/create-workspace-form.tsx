@@ -5,8 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useCreateWorkspace } from '../api/use-create-workspace';
 import { CreateWorkspaceSchema, createWorkspaceSchema } from '../schemas';
@@ -16,6 +18,7 @@ interface CreateWorkspaceFormProps {
 }
 
 export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
+  const router = useRouter();
   const t = useTranslations('WorkSpace.CreateWorkspaceForm');
   const form = useForm<CreateWorkspaceSchema>({
     resolver: zodResolver(createWorkspaceSchema),
@@ -28,13 +31,30 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
   const { mutate, isPending } = useCreateWorkspace();
 
   const onSubmit = (data: CreateWorkspaceSchema) => {
-    mutate({ json: data });
+    mutate(
+      { json: data },
+      {
+        onSuccess: (data) => {
+          form.reset();
+          if (data.success) {
+            router.push(`/workspaces/${data.data.id}`);
+          }
+        },
+      },
+    );
+  };
+
+  const handleJoinWorkspace = () => {
+    router.push('/workspaces/join');
   };
 
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none">
-      <CardHeader className="flex p-7">
+      <CardHeader className="flex items-center justify-between p-7">
         <CardTitle className="text-xl font-bold">{t('title')}</CardTitle>
+        <Button variant="secondary" onClick={handleJoinWorkspace} size="sm">
+          {t('button-join')}
+        </Button>
       </CardHeader>
       <div className="px-7">
         <DottedSeparator />
@@ -76,7 +96,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
             </div>
             <DottedSeparator className="py-7" />
             <div className="flex flex-wrap items-center justify-between">
-              <Button type="button" variant="secondary" size="lg" onClick={onCancel}>
+              <Button type="button" variant="secondary" size="lg" onClick={onCancel} className={cn(!onCancel && 'invisible')}>
                 {t('button-cancel')}
               </Button>
               <Button type="submit" disabled={!form.formState.isValid || isPending} size="lg">
@@ -89,4 +109,3 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
     </Card>
   );
 };
-

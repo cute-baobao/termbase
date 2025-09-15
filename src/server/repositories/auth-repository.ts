@@ -12,26 +12,30 @@ export class AuthRepository {
   }
 
   static async createUser(user: SignUpSchema) {
-    return await db.user.create({
-      data: {
-        ...user,
-      },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        globalRole: true,
-        createdAt: true,
-      },
-    });
+    try {
+      return await db.user.create({
+        data: {
+          ...user,
+        },
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          globalRole: true,
+          createdAt: true,
+        },
+      });
+    } catch (error) {
+      console.error('Error creating user:', error instanceof Error ? error.message : error);
+      return null;
+    }
   }
 
   static async findUserByEmail(email: string) {
     return await db.user.findUnique({
       where: {
         email,
-      }
+      },
     });
   }
 }
-

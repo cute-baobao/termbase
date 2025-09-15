@@ -1,7 +1,6 @@
 import { client } from '@/lib/utils/rpc';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { useUserStore } from '../store/use-user-store';
 
@@ -10,7 +9,7 @@ type ResponseType = InferResponseType<typeof client.api.auth.signIn.$post>;
 
 export const useSignIn = () => {
   const { setUser } = useUserStore();
-  const router = useRouter();
+  const queryClient = useQueryClient();
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await client.api.auth.signIn.$post({ json });
@@ -28,7 +27,8 @@ export const useSignIn = () => {
           lastLogin: new Date(response.data.lastLogin || 0),
           updatedAt: new Date(response.data.updatedAt),
         });
-        router.push('/');
+        // Invalidate workspaces query to refetch the latest data
+        queryClient.invalidateQueries({ queryKey: ['workspaces'] });
       }
       toast(response.message);
     },
@@ -39,4 +39,3 @@ export const useSignIn = () => {
 
   return mutation;
 };
-

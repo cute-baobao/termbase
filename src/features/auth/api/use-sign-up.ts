@@ -1,14 +1,12 @@
 import { client } from '@/lib/utils/rpc';
 import { useMutation } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
-import { useRouter } from 'next/router';
 import { toast } from 'sonner';
 
 type RequestType = InferRequestType<typeof client.api.auth.signUp.$post>;
 type ResponseType = InferResponseType<typeof client.api.auth.signUp.$post>;
 
 const useSignUp = () => {
-  const router = useRouter();
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationFn: async ({ json }) => {
       const response = await client.api.auth.signUp.$post({ json });
@@ -20,9 +18,6 @@ const useSignUp = () => {
     },
     onSuccess: (response) => {
       toast.success(response.message);
-      if (response.success && response.data !== null) {
-        router.push('/sign-in');
-      }
     },
 
     onError: (error) => {

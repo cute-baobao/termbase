@@ -9,8 +9,10 @@ import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
+import { safeRedirect } from '@/lib/utils/safe-redirect';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { useSignIn } from '../api/use-sign-in';
 import { signInSchema, SignInSchema } from '../schemas';
@@ -24,10 +26,21 @@ const SignInCard = () => {
       password: '',
     },
   });
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const next = safeRedirect(searchParams.get('next'));
+
   const { mutate, isPending } = useSignIn();
 
   const onSubmit = (data: SignInSchema) => {
-    mutate({ json: data });
+    mutate(
+      { json: data },
+      {
+        onSuccess: () => {
+          router.push(next || '/');
+        },
+      },
+    );
   };
   return (
     <Card className="h-full w-full gap-0 border-none shadow-none md:w-[487px]">
@@ -99,7 +112,7 @@ const SignInCard = () => {
       <CardContent className="flex items-center justify-center p-7">
         <p>
           {t('AuthPage.SignInPage.dont-have-account')}&nbsp;
-          <Link href="/sign-up">
+          <Link href={next ? `/sign-up?next=${encodeURIComponent(next)}` : '/sign-up'}>
             <span className="text-blue-700">&nbsp;{t('AuthPage.sign-up')}</span>
           </Link>
         </p>

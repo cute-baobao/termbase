@@ -45,14 +45,14 @@
 ### 🏢 Phase 3: 工作区管理 (Week 2) **新增**
 
 #### 3.1 工作区 CRUD
-- [ ] 工作区列表页 (`/workspaces`)
+- [X] 工作区列表页 (`/workspaces`)
   - [ ] 我拥有的工作区
   - [ ] 我参与的工作区
-  - [ ] 创建新工作区按钮
-- [ ] 创建工作区 API (`POST /api/workspaces`)
-- [ ] 创建工作区对话框
-  - [ ] 名称输入
-  - [ ] 创建后自动跳转
+  - [X] 创建新工作区按钮
+- [X] 创建工作区 API (`POST /api/workspaces`)
+- [X] 创建工作区对话框
+  - [X] 名称输入
+  - [X] 创建后自动跳转
 - [ ] 重命名/删除工作区功能
   - [ ] 确认对话框
   - [ ] 权限检查（仅owner可删除）
@@ -64,7 +64,7 @@
   - [ ] 工作区角色层级检查
 - [ ] 工作区成员管理 API
   - [ ] 获取成员列表 (`GET /api/workspaces/:id/members`)
-  - [ ] 添加成员 (`POST /api/workspaces/:id/members`)
+  - [X] 添加成员 (`POST /api/workspaces/:id/members`)
   - [ ] 修改成员权限 (`PUT /api/workspaces/:id/members/:userId`)
   - [ ] 移除成员 (`DELETE /api/workspaces/:id/members/:userId`)
 
