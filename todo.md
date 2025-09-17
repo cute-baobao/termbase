@@ -11,7 +11,7 @@
   - [X] `WorkspaceMember` 表 (id, workspaceId, userId, role, permissions, created_at)
   - [X] `Termbase` 表 (id, name, ownerId, workspaceId, sourceLang, targetLang, isDeleted, created_at)
   - [X] `Term` 表 (id, termbaseId, sourceTerm, targetTerm, created_at, updated_at)
-  - [ ] `Invitation` 表 (id, workspaceId, email, token, role, expires_at)
+  - [X] `Invitation` 表 (id, workspaceId, email, token, role, expires_at)
 - [X] 初始化 Prisma 配置
 - [ ] 解决数据库迁移冲突 (Role enum already exists)
 - [ ] 创建新的 migration 文件
