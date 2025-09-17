@@ -1,8 +1,36 @@
-import { CreateWorkspaceMemberSchema } from '@/features/workspaces-member/schema';
+import { CreateWorkspaceMember } from '@/features/members/schema';
 import { db } from '@/lib/db';
 
 export class WorkspaceMemberRepository {
-  static async addMemberToWorkspace(schema: CreateWorkspaceMemberSchema) {
+  static async updateWorkspaceMember(memberId: number, data: { role: 'OWNER' | 'ADMIN' | 'EDITOR' | 'VIEWER' }) {
+    try {
+      return await db.workspaceMember.update({
+        where: {
+          id: memberId,
+        },
+        data: {
+          role: data.role,
+        },
+      });
+    } catch (error) {
+      console.error('[error updateWorkspaceMember]', error instanceof Error ? error.message : error);
+      return null;
+    }
+  }
+
+  static async deleteWorkspaceMember(memberId: number) {
+    try {
+      return await db.workspaceMember.delete({
+        where: {
+          id: memberId,
+        },
+      });
+    } catch (error) {
+      console.log('[error deleteWorkspaceMember]', error instanceof Error ? error.message : error);
+      return null;
+    }
+  }
+  static async addMemberToWorkspace(schema: CreateWorkspaceMember) {
     try {
       return await db.workspaceMember.create({
         data: {
@@ -44,7 +72,7 @@ export class WorkspaceMemberRepository {
     }
   }
 
-  static async addMemberToWorkspaceByInvite(schema: CreateWorkspaceMemberSchema, token: string) {
+  static async addMemberToWorkspaceByInvite(schema: CreateWorkspaceMember, token: string) {
     try {
       return await db.$transaction(async (tx) => {
         const member = await tx.workspaceMember.create({
@@ -67,5 +95,27 @@ export class WorkspaceMemberRepository {
       console.log('[error addMemberToWorkspaceByInvite]', error instanceof Error ? error.message : error);
       return null;
     }
+  }
+
+  static async getWorkspaceMembers(workspaceId: string) {
+    return await db.workspaceMember.findMany({
+      where: {
+        workspaceId,
+      },
+      include: {
+        user: true,
+      },
+    });
+  }
+
+  static async getWorkspaceMemberById(memberId: number) {
+    return await db.workspaceMember.findUnique({
+      where: {
+        id: memberId,
+      },
+      include: {
+        user: true,
+      },
+    });
   }
 }

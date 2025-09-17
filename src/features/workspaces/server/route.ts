@@ -1,4 +1,4 @@
-import { inviteWorkspaceMemberSchema } from '@/features/workspaces-member/schema';
+import { inviteWorkspaceMemberSchema } from '@/features/members/schema';
 import { AdditionalContext, sessionMiddleware } from '@/lib/middleware/session-middleware';
 import { WorkspaceService } from '@/server/service/workspace-service';
 import { zValidator } from '@hono/zod-validator';

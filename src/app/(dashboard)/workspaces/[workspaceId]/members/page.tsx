@@ -1,6 +1,6 @@
 import { getCurrentUser } from '@/features/auth/action';
-import { memberInWorkspace } from '@/features/workspaces-member/actions';
-import { InviteCode } from '@/features/workspaces-member/components/invite-code';
+import { memberInWorkspace } from '@/features/members/actions';
+import { InviteCode } from '@/features/members/components/invite-code';
 import { redirect } from 'next/navigation';
 
 interface WorkspaceMembersPageProps {

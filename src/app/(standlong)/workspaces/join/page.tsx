@@ -1,4 +1,4 @@
-import { JoinForm } from '@/features/workspaces-member/components/join-form';
+import { JoinForm } from '@/features/members/components/join-form';
 
 export default function CreateWorkspacePage() {
   return (

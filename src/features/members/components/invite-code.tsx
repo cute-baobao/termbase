@@ -15,14 +15,14 @@ import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { inviteWorkspaceMemberSchema, InviteWorkspaceMemberSchema } from '../schema';
+import { InviteWorkspaceMember, inviteWorkspaceMemberSchema } from '../schema';
 
 export function InviteCode() {
   const t = useTranslations('WorkSpace.InviteCode');
   const { workspaceId } = useParams();
   const inviteButton = useRef<HTMLButtonElement>(null);
   const [inviteLink, setInviteLink] = useState<string>('');
-  const form = useForm<InviteWorkspaceMemberSchema>({
+  const form = useForm<InviteWorkspaceMember>({
     resolver: zodResolver(inviteWorkspaceMemberSchema),
     defaultValues: {
       email: '',
@@ -33,7 +33,7 @@ export function InviteCode() {
   const { mutate: generateInviteLink, isPending } = useGenerateInviteLink();
   const [GenerateConfirm, confirm] = useConfirm(t('generate-confirm-title'), t('generate-confirm-message'));
 
-  const onSubmit = (data: InviteWorkspaceMemberSchema) => {
+  const onSubmit = (data: InviteWorkspaceMember) => {
     generateInviteLink(
       { param: { workspaceId: workspaceId as string }, json: data },
       {
@@ -116,7 +116,7 @@ export function InviteCode() {
                         <FormLabel>{t('role-label')}</FormLabel>
                         <FormControl>
                           <Select onValueChange={field.onChange} value={field.value}>
-                            <SelectTrigger className="utral-200 w-full p-1 py-5 font-medium">
+                            <SelectTrigger className="neutral-200 w-full p-1 py-5 font-medium">
                               <SelectValue placeholder={t('role-placeholder')} />
                             </SelectTrigger>
                             <SelectContent>
