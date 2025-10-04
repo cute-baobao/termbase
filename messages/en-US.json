@@ -29,6 +29,7 @@
       "already-have-account": "Already have an account?"
     }
   },
+
   "Navigation": {
     "home": "Home",
     "dashboard": "Dashboard",
@@ -46,11 +47,11 @@
       "filed-description": "Workspace Description",
       "filed-description-placeholder": "Please enter workspace description (optional)"
     },
-    "EditWorkspaceForm":{
+    "EditWorkspaceForm": {
       "title": "Edit Workspace",
       "button-cancel": "Cancel",
       "button-update": "Update Workspace",
-      "button-back":"Back",
+      "button-back": "Back",
       "filed-name": "Workspace Name",
       "filed-name-placeholder": "Please enter workspace name",
       "filed-description": "Workspace Description",
@@ -64,6 +65,17 @@
     "WorkspaceSwitcher": {
       "title": "Workspace",
       "switcher-placeholder": "Select workspace"
+    },
+    "Projects": {
+      "title": "Projects",
+      "empty": "No projects"
+    },
+    "CreateProjectForm": {
+      "title": "Create a project",
+      "button-cancel": "Cancel",
+      "button-create": "Create Project",
+      "filed-name": "Project Name",
+      "filed-name-placeholder": "Please enter project name"
     },
     "JoinForm": {
       "title": "Join Workspace",
@@ -85,6 +97,15 @@
       "generate-confirm-message": "Please copy the link and send it to your team members.",
       "copy-success": "Invite link copied to clipboard"
     }
+  },
+  "MemberPage": {
+    "back": "Back",
+    "title": "Workspace members",
+    "remove-confirm-title": "Remove Member",
+    "remove-confirm-message": "This member will be removed from this workspace.",
+    "set-admin": "Set as Administrator",
+    "set-member": "Set as Member",
+    "remove-member": "Remove {name}"
   },
   "Language": {
     "switch-success": "Language switched successfully",
@@ -133,7 +154,10 @@
       "no-permission": "No permission to delete member",
       "update-success": "Member role updated successfully",
       "update-failed": "Failed to update member role"
+    },
+    "Project": {
+      "Unauthorized": "Unauthorized",
+      "CreateSuccess": "Project created successfully"
     }
   }
 }
-

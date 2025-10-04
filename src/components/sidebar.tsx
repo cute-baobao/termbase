@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DottedSeparator } from './dotted-separator';
 import { Navigation } from './navigation';
+import { Projects } from './projects';
 
 const Sidebar = () => {
   return (
@@ -16,6 +17,8 @@ const Sidebar = () => {
       </div>
       <DottedSeparator className="my-4" />
       <Navigation />
+      <DottedSeparator className="my-4" />
+      <Projects />
     </aside>
   );
 };

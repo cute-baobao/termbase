@@ -1,6 +1,7 @@
 import { getCurrentUser } from '@/features/auth/action';
 import { memberInWorkspace } from '@/features/members/actions';
 import { InviteCode } from '@/features/members/components/invite-code';
+import { MemberList } from '@/features/members/components/members-list';
 import { redirect } from 'next/navigation';
 
 interface WorkspaceMembersPageProps {
@@ -15,16 +16,15 @@ export default async function WorkspaceMembersPage({ params }: WorkspaceMembersP
     redirect('/sign-in');
   }
   const workspaceId = (await params).workspaceId;
-  // Check if the user is a member of the workspace
   const member = await memberInWorkspace(workspaceId, user.id);
   if (!member) {
     redirect('/');
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full mx-auto">
       <InviteCode />
+      <MemberList />
     </div>
   );
 }
-

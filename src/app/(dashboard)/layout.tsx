@@ -1,5 +1,6 @@
 import { Navbar } from '@/components/navbar';
 import { Sidebar } from '@/components/sidebar';
+import { CreateProjectModal } from '@/features/projects/components/create-project-modal';
 import { CreateWorkspaceModal } from '@/features/workspaces/components/create-workspace-modal';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -13,11 +14,13 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="w-full lg:pl-[264px]">
           <div className="mx-auto h-full max-w-screen-2xl">
             <Navbar />
-            <main className="flex h-full flex-col p-6 ">{children}</main>
+            <main className="flex h-full flex-col p-6">{children}</main>
           </div>
         </div>
       </div>
+      {/* modals here */}
       <CreateWorkspaceModal />
+      <CreateProjectModal />
     </div>
   );
 }

@@ -48,10 +48,27 @@ model Workspace {
   members     WorkspaceMember[]
   termbases   Termbase[]
   invitations Invitation[]
+  Project     Project[]
 
   @@index([ownerId])
   @@index([isActive])
   @@map("workspaces")
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  name        String   @db.VarChar(100)
+  workspaceId String   @map("workspace_id")
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // 关系
+  workspace Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+  @@index([isActive])
+  @@map("projects")
 }
 
 // 工作区成员权限表
@@ -128,18 +145,18 @@ model Termbase {
 
 // 术语模型
 model Term {
-  id          String    @id @default(cuid())
-  termbaseId  String    @map("termbase_id")
-  sourceTerm  String    @map("source_term") @db.Text
-  targetTerm  String    @map("target_term") @db.Text
-  definition  String?   @db.Text // 术语定义
-  context     String?   @db.Text // 上下文
-  notes       String?   @db.Text // 备注
-  isVerified  Boolean   @default(false) @map("is_verified") // 是否已验证
-  verifiedBy  String?   @map("verified_by") // 验证者ID
-  verifiedAt  DateTime? @map("verified_at") // 验证时间
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  id         String    @id @default(cuid())
+  termbaseId String    @map("termbase_id")
+  sourceTerm String    @map("source_term") @db.Text
+  targetTerm String    @map("target_term") @db.Text
+  definition String?   @db.Text // 术语定义
+  context    String?   @db.Text // 上下文
+  notes      String?   @db.Text // 备注
+  isVerified Boolean   @default(false) @map("is_verified") // 是否已验证
+  verifiedBy String?   @map("verified_by") // 验证者ID
+  verifiedAt DateTime? @map("verified_at") // 验证时间
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
 
   // 关系
   termbase Termbase @relation(fields: [termbaseId], references: [id], onDelete: Cascade)
@@ -160,7 +177,7 @@ model AuditLog {
   entityId   String      @map("entity_id")
   oldValues  Json?       @map("old_values")
   newValues  Json?       @map("new_values")
-  metadata   Json?       // 额外的元数据
+  metadata   Json? // 额外的元数据
   ipAddress  String?     @map("ip_address") @db.VarChar(45)
   userAgent  String?     @map("user_agent") @db.Text
   createdAt  DateTime    @default(now()) @map("created_at")
@@ -175,15 +192,15 @@ model AuditLog {
 // 全局角色枚举
 enum GlobalRole {
   ADMIN // 拥有所有工作区和术语库的完全访问权限
-  USER  // 普通用户，需要在每个工作区中单独授权
+  USER // 普通用户，需要在每个工作区中单独授权
 
   @@map("global_role")
 }
 
 // 工作区角色枚举
 enum WorkspaceRole {
-  OWNER  // 工作区所有者，拥有完全控制权
-  ADMIN  // 工作区管理员，可以管理成员和术语库
+  OWNER // 工作区所有者，拥有完全控制权
+  ADMIN // 工作区管理员，可以管理成员和术语库
   EDITOR // 编辑者，可以创建、编辑术语库和术语
   VIEWER // 查看者，只能查看工作区内容
 
@@ -192,8 +209,9 @@ enum WorkspaceRole {
 
 // 语言枚举
 enum Lang {
-  EN    // English
-  ZH    // Chinese
+  EN // English
+  ZH // Chinese
+
   @@map("lang")
 }
 

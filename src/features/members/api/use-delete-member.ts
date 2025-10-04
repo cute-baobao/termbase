@@ -1,12 +1,13 @@
 import { Itoast } from '@/lib/utils/Itoast';
 import { client } from '@/lib/utils/rpc';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InferRequestType, InferResponseType } from 'hono';
 
 type RequestType = InferRequestType<(typeof client.api.members)[':memberId']['$delete']>;
 type ResponseType = InferResponseType<(typeof client.api.members)[':memberId']['$delete']>;
 
 export const useDeleteMember = () => {
+  const queryClient = useQueryClient();
   const mutation = useMutation<ResponseType, Error, RequestType>({
     mutationKey: ['members'],
     mutationFn: async ({ param }) => {
@@ -16,6 +17,7 @@ export const useDeleteMember = () => {
       return data;
     },
     onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['members'] });
       Itoast(data);
     },
     onError: (error) => {

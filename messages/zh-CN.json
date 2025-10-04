@@ -46,11 +46,11 @@
       "filed-description": "工作区描述",
       "filed-description-placeholder": "请输入工作区描述（可选）"
     },
-    "EditWorkspaceForm":{
+    "EditWorkspaceForm": {
       "title": "编辑工作区",
       "button-cancel": "取消",
       "button-update": "更新工作区",
-      "button-back":"返回",
+      "button-back": "返回",
       "filed-name": "工作区名称",
       "filed-name-placeholder": "请输入工作区名称",
       "filed-description": "工作区描述",
@@ -64,6 +64,17 @@
     "WorkspaceSwitcher": {
       "title": "工作区",
       "switcher-placeholder": "选择工作区"
+    },
+    "Projects": {
+      "title": "项目",
+      "empty": "无项目"
+    },
+    "CreateProjectForm": {
+      "title": "创建项目",
+      "button-cancel": "取消",
+      "button-create": "创建项目",
+      "filed-name": "项目名称",
+      "filed-name-placeholder": "请输入项目名称"
     },
     "JoinForm": {
       "title": "加入工作区",
@@ -90,6 +101,15 @@
     "switch-success": "语言切换成功",
     "english": "English",
     "chinese": "中文"
+  },
+  "MemberPage": {
+    "back": "返回",
+    "title": "工作区成员",
+    "remove-confirm-title": "移除成员",
+    "remove-confirm-message": "该成员将被从工作区中移除。",
+    "set-admin": "设为管理员",
+    "set-member": "设为成员",
+    "remove-member": "移除 {name}"
   },
   "Common": {
     "invite-link-copied": "邀请链接已复制到剪贴板"
@@ -133,6 +153,11 @@
       "no-permission": "没有权限删除成员",
       "update-success": "成员角色更新成功",
       "update-failed": "更新成员角色失败"
+    }
+    ,
+    "Project": {
+      "Unauthorized": "未授权",
+      "CreateSuccess": "项目创建成功"
     }
   }
 }
