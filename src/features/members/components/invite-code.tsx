@@ -40,7 +40,7 @@ export function InviteCode() {
         onSuccess: async (data) => {
           Itoast(data);
           if (data.success) {
-            setInviteLink(`${window.location.origin}/join/${data.data.token}`);
+            setInviteLink(`${window.location.origin}/workspaces/join/${data.data.token}`);
             await confirm();
             form.reset();
           }
